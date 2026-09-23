@@ -56,38 +56,40 @@
         </div>
     </header>
 
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <section class="mb-10">
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <!-- قسم التصنيفات -->
+        <section class="mb-8">
             <div class="flex items-center justify-between mb-4">
                 <h2 class="text-xl font-black text-stone-900 flex items-center gap-2">
-                    <i class="fa-solid fa-border-all text-pink-600"></i> التصنيفات الرئيسية
+                    <i class="fa-solid fa-border-all text-pink-600"></i> التصنيفات
                 </h2>
             </div>
-            <div id="categories-container" class="flex gap-4 overflow-x-auto pb-4 hide-scrollbar">
+            <div id="categories-container" class="flex gap-4 overflow-x-auto pb-3 hide-scrollbar items-start">
             </div>
         </section>
 
+        <!-- قسم المنتجات -->
         <section>
-            <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center justify-between mb-4">
                 <div>
-                    <h2 id="section-title" class="text-2xl font-black text-stone-900">جميع المنتجات المختارة</h2>
-                    <p id="section-subtitle" class="text-sm text-stone-500 mt-0.5">تسوقي أحدث منتجات العناية بالبشرة والمكياج بأفضل الأسعار</p>
+                    <h2 id="section-title" class="text-xl font-black text-stone-900">جميع المنتجات المختارة</h2>
+                    <p id="section-subtitle" class="text-xs text-stone-500 mt-0.5">تسوقي أحدث منتجات العناية والمكياج</p>
                 </div>
-                <div class="text-sm font-bold text-pink-700 bg-pink-50 px-3 py-1 rounded-lg border border-pink-200">
-                    <span id="products-count">0</span> منتج متوفر
+                <div class="text-xs font-bold text-pink-700 bg-pink-50 px-2.5 py-1 rounded-lg border border-pink-200">
+                    <span id="products-count">0</span> منتج
                 </div>
             </div>
 
-            <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div id="products-grid" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
             </div>
 
             <div id="no-products-found" class="hidden text-center py-20">
-                <div class="w-20 h-20 bg-pink-100 text-pink-600 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
+                <div class="w-16 h-16 bg-pink-100 text-pink-600 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">
                     <i class="fa-solid fa-box-open"></i>
                 </div>
-                <h3 class="text-lg font-bold text-stone-800">لا توجد منتجات مطابقة لبحثك</h3>
-                <p class="text-stone-500 text-sm mt-1">جربي البحث بكلمات أخرى أو تصفح قسم آخر.</p>
-                <button onclick="clearSearch()" class="mt-4 px-5 py-2 bg-pink-600 text-white rounded-xl font-bold hover:bg-pink-700 transition">إلغاء البحث وعرض الكل</button>
+                <h3 class="text-base font-bold text-stone-800">لا توجد منتجات مطابقة لبحثك</h3>
+                <p class="text-stone-500 text-xs mt-1">جربي البحث بكلمات أخرى أو تصفح قسم آخر.</p>
+                <button onclick="clearSearch()" class="mt-4 px-4 py-2 bg-pink-600 text-white rounded-xl font-bold text-xs hover:bg-pink-700 transition">إلغاء البحث وعرض الكل</button>
             </div>
         </section>
     </main>
@@ -131,26 +133,30 @@
                         <div>
                             <label class="block text-xs font-bold text-stone-700 mb-1">المحافظة:</label>
                             <select id="customer-province" onchange="updateCartTotals()" class="w-full px-3.5 py-2.5 bg-white border border-pink-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none">
+                                <option value="بابل" selected>بابل (3,000 د.ع)</option>
                                 <option value="بغداد">بغداد (5,000 د.ع)</option>
-                                <option value="بابل" selected>بابل (5,000 د.ع)</option>
+                                <option value="البصرة">البصرة (5,000 د.ع)</option>
+                                <option value="نينوى">نينوى (5,000 د.ع)</option>
+                                <option value="أربيل">أربيل (5,000 د.ع)</option>
+                                <option value="السليمانية">السليمانية (5,000 د.ع)</option>
+                                <option value="كركوك">كركوك (5,000 د.ع)</option>
                                 <option value="النجف">النجف (5,000 د.ع)</option>
                                 <option value="كربلاء">كربلاء (5,000 د.ع)</option>
-                                <option value="البصرة">البصرة (7,000 د.ع)</option>
-                                <option value="أخرى">باقي المحافظات (7,000 د.ع)</option>
+                                <option value="الأنبار">الأنبار (5,000 د.ع)</option>
+                                <option value="ديالى">ديالى (5,000 د.ع)</option>
+                                <option value="صلاح الدين">صلاح الدين (5,000 د.ع)</option>
+                                <option value="الذيب قار">ذي قار (5,000 د.ع)</option>
+                                <option value="ميسان">ميسان (5,000 د.ع)</option>
+                                <option value="المثنى">المثنى (5,000 د.ع)</option>
+                                <option value="القادسية">القادسية (5,000 د.ع)</option>
+                                <option value="واسط">واسط (5,000 د.ع)</option>
+                                <option value="دهوك">دهوك (5,000 د.ع)</option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-stone-700 mb-1">المنطقة / القضاء:</label>
                             <input type="text" id="customer-area" placeholder="اسم المنطقة أو الحي..." class="w-full px-3.5 py-2.5 bg-white border border-pink-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none">
                         </div>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-stone-700 mb-1">رمز الخصم (إن وجد):</label>
-                        <div class="flex gap-2">
-                            <input type="text" id="discount-code-input" placeholder="أدخلي كود الخصم..." class="w-full px-3.5 py-2.5 bg-white border border-pink-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none uppercase">
-                            <button onclick="applyDiscountCode()" class="bg-stone-900 hover:bg-stone-800 text-white px-4 rounded-xl text-xs font-bold transition">تطبيق</button>
-                        </div>
-                        <p id="discount-status-msg" class="text-xs mt-1 text-emerald-600 font-bold hidden"></p>
                     </div>
                 </div>
             </div>
@@ -162,10 +168,10 @@
                 </div>
                 <div class="flex justify-between items-center text-xs text-stone-600">
                     <span>قيمة التوصيل:</span>
-                    <span id="cart-shipping-fee" class="font-bold">5,000 د.ع</span>
+                    <span id="cart-shipping-fee" class="font-bold">3,000 د.ع</span>
                 </div>
                 <div id="discount-row" class="flex justify-between items-center text-xs text-emerald-600 hidden">
-                    <span>الخصم المطبق:</span>
+                    <span id="discount-label-text">الخصم المطبق:</span>
                     <span id="cart-discount-val" class="font-bold">-0 د.ع</span>
                 </div>
                 <div class="flex justify-between items-center text-base font-black text-stone-900 pt-2 border-t border-stone-200">
@@ -213,7 +219,8 @@
             <div class="flex border-b border-stone-200 bg-stone-50 px-4 pt-2 gap-2 overflow-x-auto">
                 <button onclick="switchAdminTab('products')" id="tab-btn-products" class="px-5 py-3 font-bold text-sm border-b-2 border-pink-600 text-pink-700 bg-white rounded-t-xl transition">إدارة المنتجات</button>
                 <button onclick="switchAdminTab('categories')" id="tab-btn-categories" class="px-5 py-3 font-bold text-sm text-stone-600 hover:text-stone-900 transition">إدارة التصنيفات</button>
-                <button onclick="switchAdminTab('settings')" id="tab-btn-settings" class="px-5 py-3 font-bold text-sm text-stone-600 hover:text-stone-900 transition">إعدادات المتجر والشعار</button>
+                <button onclick="switchAdminTab('discount')" id="tab-btn-discount" class="px-5 py-3 font-bold text-sm text-stone-600 hover:text-stone-900 transition">إدارة الخصومات</button>
+                <button onclick="switchAdminTab('settings')" id="tab-btn-settings" class="px-5 py-3 font-bold text-sm text-stone-600 hover:text-stone-900 transition">إعدادات الشعار</button>
             </div>
 
             <div class="p-6 overflow-y-auto flex-grow bg-stone-50/50">
@@ -310,6 +317,36 @@
                     </div>
                 </div>
 
+                <!-- تبويب إدارة الخصومات -->
+                <div id="admin-tab-discount" class="hidden space-y-6">
+                    <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm max-w-xl">
+                        <h4 class="text-base font-black text-stone-900 mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-percent text-pink-600"></i> إعداد خصم مباشر للزبائن
+                        </h4>
+                        <p class="text-xs text-stone-500 mb-6">يمكنك تحديد نسبة خصم عامة تطبق مباشرة على مجموع السلة لكل الزبائن بدون الحاجة لكود خصم.</p>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 mb-1">نوع الخصم:</label>
+                                <select id="admin-discount-type" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none">
+                                    <option value="none">بدون خصم</option>
+                                    <option value="percentage">نسبة مئوية (%)</option>
+                                    <option value="fixed">مبلغ ثابت (د.ع)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 mb-1">قيمة الخصم (رقم فقط):</label>
+                                <input type="number" id="admin-discount-value" placeholder="مثال: 10 تعني 10% أو 5000 تعني 5 آلاف دينار" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 mb-1">عنوان الخصم (يظهر للزبونة في السلة):</label>
+                                <input type="text" id="admin-discount-title" placeholder="مثال: خصم العيد الترويجي" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none">
+                            </div>
+                            <button onclick="saveStoreDiscount()" class="bg-pink-600 hover:bg-pink-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition shadow">حفظ وتطبيق الخصم للزبائن</button>
+                        </div>
+                    </div>
+                </div>
+
                 <div id="admin-tab-settings" class="hidden space-y-6">
                     <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
                         <h4 class="text-base font-black text-stone-900 mb-4 flex items-center gap-2">
@@ -353,8 +390,7 @@
         let cart = [];
         let currentSelectedCategory = 'الكل';
         let searchQuery = '';
-        let discountMultiplier = 1; 
-        let appliedDiscountCodeText = '';
+        let storeDiscount = { type: 'none', value: 0, title: 'خصم خاص' };
         let isOfflineMode = false;
 
         const defaultCategories = [
@@ -419,13 +455,25 @@
         function initFirestoreListeners() {
             const settingsDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings');
             onSnapshot(settingsDocRef, (docSnap) => {
-                if (docSnap.exists() && docSnap.data().logoUrl) {
-                    const logoUrl = docSnap.data().logoUrl;
-                    document.getElementById('store-logo-img').src = logoUrl;
-                    const inputEl = document.getElementById('store-logo-url-input');
-                    if (inputEl) inputEl.value = logoUrl;
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    if (data.logoUrl) {
+                        document.getElementById('store-logo-img').src = data.logoUrl;
+                        const inputEl = document.getElementById('store-logo-url-input');
+                        if (inputEl) inputEl.value = data.logoUrl;
+                    }
+                    if (data.discount) {
+                        storeDiscount = data.discount;
+                        document.getElementById('admin-discount-type').value = storeDiscount.type;
+                        document.getElementById('admin-discount-value').value = storeDiscount.value;
+                        document.getElementById('admin-discount-title').value = storeDiscount.title;
+                        updateCartTotals();
+                    }
                 } else {
-                    setDoc(settingsDocRef, { logoUrl: 'https://placehold.co/100x100/fce7f3/db2777?text=آثار' }, { merge: true });
+                    setDoc(settingsDocRef, { 
+                        logoUrl: 'https://placehold.co/100x100/fce7f3/db2777?text=آثار',
+                        discount: { type: 'none', value: 0, title: 'خصم خاص' }
+                    }, { merge: true });
                 }
             }, (error) => {
                 console.error("Settings error:", error);
@@ -446,12 +494,6 @@
                 renderCategories();
                 populateCategoryDropdown();
                 renderAdminCategoriesTable();
-            }, (error) => {
-                console.warn("Categories snapshot failed, falling back to local:", error);
-                if(categories.length === 0) categories = defaultCategories;
-                renderCategories();
-                populateCategoryDropdown();
-                renderAdminCategoriesTable();
             });
 
             const productsCol = collection(db, 'artifacts', appId, 'products');
@@ -466,11 +508,6 @@
                     });
                     products = defaultProducts;
                 }
-                renderProducts();
-                renderAdminProductsTable();
-            }, (error) => {
-                console.warn("Products snapshot failed, falling back to local:", error);
-                if(products.length === 0) products = defaultProducts;
                 renderProducts();
                 renderAdminProductsTable();
             });
@@ -493,13 +530,13 @@
                 const isSelected = currentSelectedCategory === cat.name;
                 const btn = document.createElement('button');
                 btn.onclick = () => filterByCategory(cat.name);
-                btn.className = `flex items-center gap-3 px-4 py-3 rounded-2xl transition border shrink-0 font-bold text-sm shadow-sm ${isSelected ? 'bg-pink-600 text-white border-pink-600 shadow-pink-600/20' : 'bg-white text-stone-700 border-stone-200 hover:border-pink-300'}`;
+                btn.className = `flex flex-col items-center gap-2 shrink-0 group focus:outline-none select-none`;
                 
                 btn.innerHTML = `
-                    <div class="w-8 h-8 rounded-xl overflow-hidden bg-pink-50 flex items-center justify-center shrink-0">
-                        <img src="${cat.image}" alt="${cat.name}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/50x50/fce7f3/db2777?text=صورة'">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden shadow-sm border-2 transition ${isSelected ? 'border-pink-600 bg-pink-100 shadow-md shadow-pink-600/10 ring-2 ring-pink-400/30' : 'border-amber-200/80 bg-amber-300 hover:border-pink-400'} flex items-center justify-center p-2">
+                        <img src="${cat.image}" alt="${cat.name}" class="w-full h-full object-cover rounded-xl" onerror="this.src='https://placehold.co/100x100/fce7f3/db2777?text=صورة'">
                     </div>
-                    <span>${cat.name}</span>
+                    <span class="text-xs sm:text-sm font-bold text-stone-800 text-center max-w-[75px] sm:max-w-[85px] truncate">${cat.name}</span>
                 `;
                 container.appendChild(btn);
             });
@@ -558,22 +595,21 @@
 
             filtered.forEach(p => {
                 const card = document.createElement('div');
-                card.className = 'bg-white rounded-3xl border border-pink-100/80 shadow-sm hover:shadow-md transition overflow-hidden flex flex-col justify-between group';
+                card.className = 'bg-white rounded-2xl border border-pink-100 shadow-sm hover:shadow transition overflow-hidden flex flex-col justify-between group';
                 card.innerHTML = `
                     <div>
-                        <div class="relative h-56 bg-pink-50/50 overflow-hidden">
-                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/400x400/fce7f3/db2777?text=صورة+المنتج'">
-                            <span class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-pink-700 text-xs font-bold px-3 py-1 rounded-xl shadow-sm border border-pink-100">${p.category}</span>
+                        <div class="relative h-36 sm:h-44 bg-pink-50/40 overflow-hidden">
+                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://placehold.co/300x300/fce7f3/db2777?text=صورة+المنتج'">
+                            <button class="absolute top-2 left-2 text-stone-400 hover:text-pink-600 bg-white/80 p-1.5 rounded-full shadow-xs"><i class="fa-regular fa-heart text-xs"></i></button>
                         </div>
-                        <div class="p-5">
-                            <h3 class="font-black text-stone-900 text-lg mb-1 line-clamp-1">${p.name}</h3>
-                            <p class="text-stone-500 text-xs line-clamp-2 mb-4">${p.description}</p>
+                        <div class="p-3">
+                            <h3 class="font-bold text-stone-900 text-xs sm:text-sm mb-1 line-clamp-1">${p.name}</h3>
+                            <div class="text-pink-700 font-black text-xs sm:text-sm mb-1">${Number(p.price).toLocaleString()} <span class="text-[10px] text-stone-500 font-normal">د.ع</span></div>
                         </div>
                     </div>
-                    <div class="p-5 pt-0 flex items-center justify-between">
-                        <span class="text-pink-700 font-black text-lg">${Number(p.price).toLocaleString()} <span class="text-xs font-bold text-stone-500">د.ع</span></span>
-                        <button onclick="addToCart('${p.id}')" class="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2.5 rounded-2xl font-bold text-sm flex items-center gap-2 transition shadow-sm shadow-pink-600/20">
-                            <i class="fa-solid fa-cart-plus"></i> أضف للسلة
+                    <div class="p-2 pt-0">
+                        <button onclick="addToCart('${p.id}')" class="w-full bg-[#736a17] hover:bg-[#605712] text-white py-2 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs">
+                            <i class="fa-solid fa-cart-plus text-[11px]"></i> اضافة الى السلة
                         </button>
                     </div>
                 `;
@@ -627,38 +663,6 @@
             updateCartTotals();
         }
 
-        window.applyDiscountCode = function() {
-            const code = document.getElementById('discount-code-input').value.trim().toUpperCase();
-            const msgEl = document.getElementById('discount-status-msg');
-            const rowEl = document.getElementById('discount-row');
-
-            if (code === 'ASAR10' || code === 'VIP') {
-                discountMultiplier = 0.9; 
-                appliedDiscountCodeText = code;
-                msgEl.innerText = 'تم تطبيق كود الخصم (10%) بنجاح!';
-                msgEl.className = 'text-xs mt-1 text-emerald-600 font-bold';
-                msgEl.classList.remove('hidden');
-                rowEl.classList.remove('hidden');
-                updateCartTotals();
-            } else if (code === 'ASAR20') {
-                discountMultiplier = 0.8; 
-                appliedDiscountCodeText = code;
-                msgEl.innerText = 'تم تطبيق كود الخصم (20%) بنجاح!';
-                msgEl.className = 'text-xs mt-1 text-emerald-600 font-bold';
-                msgEl.classList.remove('hidden');
-                rowEl.classList.remove('hidden');
-                updateCartTotals();
-            } else {
-                discountMultiplier = 1;
-                appliedDiscountCodeText = '';
-                msgEl.innerText = 'كود الخصم غير صحيح';
-                msgEl.className = 'text-xs mt-1 text-red-600 font-bold';
-                msgEl.classList.remove('hidden');
-                rowEl.classList.add('hidden');
-                updateCartTotals();
-            }
-        }
-
         window.updateCartTotals = function() {
             const container = document.getElementById('cart-items-container');
             if (!container) return;
@@ -676,6 +680,7 @@
                 document.getElementById('cart-subtotal').innerText = '0 د.ع';
                 document.getElementById('cart-shipping-fee').innerText = '0 د.ع';
                 document.getElementById('cart-total-price').innerText = '0 د.ع';
+                document.getElementById('discount-row').classList.add('hidden');
                 return;
             }
 
@@ -703,16 +708,25 @@
             });
 
             const province = document.getElementById('customer-province').value;
-            const shippingFee = (province === 'البصرة' || province === 'أخرى') ? 7000 : 5000;
+            // بابل 3000 وباقي المحافظات 5000
+            const shippingFee = (province === 'بابل') ? 3000 : 5000;
             
-            const discountedSubtotal = Math.round(subtotal * discountMultiplier);
-            const discountAmount = subtotal - discountedSubtotal;
+            let discountAmount = 0;
+            if (storeDiscount.type === 'percentage') {
+                discountAmount = Math.round((subtotal * Number(storeDiscount.value)) / 100);
+            } else if (storeDiscount.type === 'fixed') {
+                discountAmount = Number(storeDiscount.value);
+            }
+
+            if (discountAmount > subtotal) discountAmount = subtotal;
+            const discountedSubtotal = subtotal - discountAmount;
             const finalTotal = discountedSubtotal + shippingFee;
 
             document.getElementById('cart-subtotal').innerText = subtotal.toLocaleString() + ' د.ع';
             document.getElementById('cart-shipping-fee').innerText = shippingFee.toLocaleString() + ' د.ع';
             
             if (discountAmount > 0) {
+                document.getElementById('discount-label-text').innerText = (storeDiscount.title || 'الخصم') + ':';
                 document.getElementById('cart-discount-val').innerText = '-' + discountAmount.toLocaleString() + ' د.ع';
                 document.getElementById('discount-row').classList.remove('hidden');
             } else {
@@ -739,9 +753,16 @@
 
             let subtotal = 0;
             cart.forEach(item => { subtotal += item.price * item.quantity; });
-            const shippingFee = (province === 'البصرة' || province === 'أخرى') ? 7000 : 5000;
-            const discountedSubtotal = Math.round(subtotal * discountMultiplier);
-            const finalTotal = discountedSubtotal + shippingFee;
+            const shippingFee = (province === 'بابل') ? 3000 : 5000;
+            
+            let discountAmount = 0;
+            if (storeDiscount.type === 'percentage') {
+                discountAmount = Math.round((subtotal * Number(storeDiscount.value)) / 100);
+            } else if (storeDiscount.type === 'fixed') {
+                discountAmount = Number(storeDiscount.value);
+            }
+            if (discountAmount > subtotal) discountAmount = subtotal;
+            const finalTotal = (subtotal - discountAmount) + shippingFee;
 
             let message = `مرحباً، أود إتمام طلب جديد من متجر كماليات آثار:\n\n👤 اسم الزبونة: ${name}\n📞 رقم الهاتف: ${phone}\n📍 المحافظة: ${province}\n🏠 المنطقة: ${area}\n\n🛍️ تفاصيل المنتجات:\n`;
             cart.forEach((item, index) => {
@@ -750,8 +771,8 @@
             });
             
             message += `\n📦 مجموع المنتجات: ${subtotal.toLocaleString()} د.ع`;
-            if (discountMultiplier < 1) {
-                message += `\n🏷️ الخصم المطبق: ${appliedDiscountCodeText}`;
+            if (discountAmount > 0) {
+                message += `\n🏷️ ${storeDiscount.title || 'خصم'}: -${discountAmount.toLocaleString()} د.ع`;
             }
             message += `\n🚚 التوصيل: ${shippingFee.toLocaleString()} د.ع`;
             message += `\n💰 الإجمالي الكلي النهائي: ${finalTotal.toLocaleString()} د.ع`;
@@ -789,10 +810,12 @@
         window.switchAdminTab = function(tabName) {
             document.getElementById('admin-tab-products').classList.add('hidden');
             document.getElementById('admin-tab-categories').classList.add('hidden');
+            document.getElementById('admin-tab-discount').classList.add('hidden');
             document.getElementById('admin-tab-settings').classList.add('hidden');
 
             document.getElementById('tab-btn-products').className = 'px-5 py-3 font-bold text-sm text-stone-600 hover:text-stone-900 transition';
             document.getElementById('tab-btn-categories').className = 'px-5 py-3 font-bold text-sm text-stone-600 hover:text-stone-900 transition';
+            document.getElementById('tab-btn-discount').className = 'px-5 py-3 font-bold text-sm text-stone-600 hover:text-stone-900 transition';
             document.getElementById('tab-btn-settings').className = 'px-5 py-3 font-bold text-sm text-stone-600 hover:text-stone-900 transition';
 
             document.getElementById(`admin-tab-${tabName}`).classList.remove('hidden');
@@ -826,7 +849,6 @@
                 if (db && !isOfflineMode) {
                     await setDoc(doc(db, 'artifacts', appId, 'categories', newCatId), catData);
                 }
-                // تحديث محلي مباشر لضمان استجابة فورية
                 if (!categories.some(c => c.name === name)) {
                     categories.push({ id: newCatId, ...catData });
                 }
@@ -883,6 +905,27 @@
                 populateCategoryDropdown();
                 renderAdminCategoriesTable();
                 showCustomAlert('تم الحذف', 'تم حذف التصنيف محلياً.', 'success');
+            }
+        }
+
+        window.saveStoreDiscount = async function() {
+            const type = document.getElementById('admin-discount-type').value;
+            const value = Number(document.getElementById('admin-discount-value').value);
+            const title = document.getElementById('admin-discount-title').value.trim() || 'خصم المتجر';
+
+            storeDiscount = { type, value, title };
+
+            try {
+                if (db && !isOfflineMode) {
+                    const settingsRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings');
+                    await setDoc(settingsRef, { discount: storeDiscount }, { merge: true });
+                }
+                updateCartTotals();
+                showCustomAlert('تم بنجاح', 'تم حفظ وتطبيق الخصم الجديد للزبائن.', 'success');
+            } catch (e) {
+                console.error("Error saving discount:", e);
+                updateCartTotals();
+                showCustomAlert('تم بنجاح', 'تم تحديث الخصم محلياً.', 'success');
             }
         }
 
