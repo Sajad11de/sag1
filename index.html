@@ -4,14 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>متجر كماليات آثار - عالم العناية والتجميل</title>
-    <!-- تضمين مكتبة Tailwind CSS والخطوط مع دعم الترميز -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Cairo', sans-serif;
-            background-color: #fff9fb;
+            background-color: #fffafb;
             color: #44383a;
         }
         .hide-scrollbar::-webkit-scrollbar {
@@ -23,7 +22,7 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col bg-[#fff9fb]">
+<body class="min-h-screen flex flex-col bg-[#fffafb]">
 
     <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-pink-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
@@ -64,7 +63,8 @@
                     <i class="fa-solid fa-border-all text-pink-600"></i> التصنيفات الرئيسية
                 </h2>
             </div>
-            <div id="categories-container" class="flex gap-4 overflow-x-auto pb-4 hide-scrollbar"></div>
+            <div id="categories-container" class="flex gap-4 overflow-x-auto pb-4 hide-scrollbar">
+            </div>
         </section>
 
         <section>
@@ -78,7 +78,8 @@
                 </div>
             </div>
 
-            <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+            <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            </div>
 
             <div id="no-products-found" class="hidden text-center py-20">
                 <div class="w-20 h-20 bg-pink-100 text-pink-600 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
@@ -111,7 +112,8 @@
             </div>
             
             <div class="p-5 overflow-y-auto flex-grow space-y-4">
-                <div id="cart-items-container" class="divide-y divide-stone-100"></div>
+                <div id="cart-items-container" class="divide-y divide-stone-100">
+                </div>
 
                 <div class="bg-pink-50/30 p-4 rounded-2xl border border-pink-100 space-y-3 mt-4">
                     <h4 class="font-bold text-sm text-stone-800 flex items-center gap-2">
@@ -228,7 +230,8 @@
                             </div>
                             <div>
                                 <label class="block text-xs font-bold text-stone-700 mb-1">التصنيف:</label>
-                                <select id="p-category" class="w-full px-3.5 py-2 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none" required></select>
+                                <select id="p-category" class="w-full px-3.5 py-2 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none" required>
+                                </select>
                             </div>
                             <div>
                                 <label class="block text-xs font-bold text-stone-700 mb-1">السعر (د.ع):</label>
@@ -262,7 +265,8 @@
                                         <th class="p-3 text-center">الإجراءات</th>
                                     </tr>
                                 </thead>
-                                <tbody id="admin-products-table" class="divide-y divide-stone-100 text-sm"></tbody>
+                                <tbody id="admin-products-table" class="divide-y divide-stone-100 text-sm">
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -299,7 +303,8 @@
                                         <th class="p-3 text-center">الإجراءات</th>
                                     </tr>
                                 </thead>
-                                <tbody id="admin-categories-table" class="divide-y divide-stone-100 text-sm"></tbody>
+                                <tbody id="admin-categories-table" class="divide-y divide-stone-100 text-sm">
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -350,6 +355,7 @@
         let searchQuery = '';
         let discountMultiplier = 1; 
         let appliedDiscountCodeText = '';
+        let isOfflineMode = false;
 
         const defaultCategories = [
             { id: 'cat-1', name: 'الكل', image: 'https://placehold.co/100x100/fce7f3/db2777?text=الكل' },
@@ -378,6 +384,7 @@
                 initFirestoreListeners();
             } catch (e) {
                 console.warn("Using local fallback mode:", e);
+                isOfflineMode = true;
                 categories = defaultCategories;
                 products = defaultProducts;
                 renderApp();
@@ -401,8 +408,12 @@
                     openAdminLoginModal();
                 }, 1500);
             });
-            logoContainer.addEventListener('touchend', () => { if (pressTimer) clearTimeout(pressTimer); });
-            logoContainer.addEventListener('touchmove', () => { if (pressTimer) clearTimeout(pressTimer); });
+            logoContainer.addEventListener('touchend', () => {
+                if (pressTimer) clearTimeout(pressTimer);
+            });
+            logoContainer.addEventListener('touchmove', () => {
+                if (pressTimer) clearTimeout(pressTimer);
+            });
         }
 
         function initFirestoreListeners() {
@@ -416,6 +427,8 @@
                 } else {
                     setDoc(settingsDocRef, { logoUrl: 'https://placehold.co/100x100/fce7f3/db2777?text=آثار' }, { merge: true });
                 }
+            }, (error) => {
+                console.error("Settings error:", error);
             });
 
             const categoriesCol = collection(db, 'artifacts', appId, 'categories');
@@ -430,6 +443,12 @@
                     });
                     categories = defaultCategories;
                 }
+                renderCategories();
+                populateCategoryDropdown();
+                renderAdminCategoriesTable();
+            }, (error) => {
+                console.warn("Categories snapshot failed, falling back to local:", error);
+                if(categories.length === 0) categories = defaultCategories;
                 renderCategories();
                 populateCategoryDropdown();
                 renderAdminCategoriesTable();
@@ -449,6 +468,11 @@
                 }
                 renderProducts();
                 renderAdminProductsTable();
+            }, (error) => {
+                console.warn("Products snapshot failed, falling back to local:", error);
+                if(products.length === 0) products = defaultProducts;
+                renderProducts();
+                renderAdminProductsTable();
             });
         }
 
@@ -462,6 +486,7 @@
 
         window.renderCategories = function() {
             const container = document.getElementById('categories-container');
+            if (!container) return;
             container.innerHTML = '';
 
             categories.forEach(cat => {
@@ -513,6 +538,7 @@
         window.renderProducts = function() {
             const grid = document.getElementById('products-grid');
             const noProductsFound = document.getElementById('no-products-found');
+            if (!grid) return;
             grid.innerHTML = '';
 
             let filtered = products.filter(p => {
@@ -545,7 +571,7 @@
                         </div>
                     </div>
                     <div class="p-5 pt-0 flex items-center justify-between">
-                        <span class="text-pink-700 font-black text-lg">${p.price.toLocaleString()} <span class="text-xs font-bold text-stone-500">د.ع</span></span>
+                        <span class="text-pink-700 font-black text-lg">${Number(p.price).toLocaleString()} <span class="text-xs font-bold text-stone-500">د.ع</span></span>
                         <button onclick="addToCart('${p.id}')" class="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2.5 rounded-2xl font-bold text-sm flex items-center gap-2 transition shadow-sm shadow-pink-600/20">
                             <i class="fa-solid fa-cart-plus"></i> أضف للسلة
                         </button>
@@ -610,6 +636,7 @@
                 discountMultiplier = 0.9; 
                 appliedDiscountCodeText = code;
                 msgEl.innerText = 'تم تطبيق كود الخصم (10%) بنجاح!';
+                msgEl.className = 'text-xs mt-1 text-emerald-600 font-bold';
                 msgEl.classList.remove('hidden');
                 rowEl.classList.remove('hidden');
                 updateCartTotals();
@@ -617,6 +644,7 @@
                 discountMultiplier = 0.8; 
                 appliedDiscountCodeText = code;
                 msgEl.innerText = 'تم تطبيق كود الخصم (20%) بنجاح!';
+                msgEl.className = 'text-xs mt-1 text-emerald-600 font-bold';
                 msgEl.classList.remove('hidden');
                 rowEl.classList.remove('hidden');
                 updateCartTotals();
@@ -633,6 +661,7 @@
 
         window.updateCartTotals = function() {
             const container = document.getElementById('cart-items-container');
+            if (!container) return;
             container.innerHTML = '';
 
             if (cart.length === 0) {
@@ -660,7 +689,7 @@
                         <img src="${item.image}" class="w-12 h-12 rounded-xl object-cover bg-stone-100" onerror="this.src='https://placehold.co/100x100/fce7f3/db2777?text=منتج'">
                         <div>
                             <h4 class="font-bold text-stone-900 text-xs">${item.name}</h4>
-                            <p class="text-xs text-pink-700 font-bold mt-0.5">${item.price.toLocaleString()} د.ع</p>
+                            <p class="text-xs text-pink-700 font-bold mt-0.5">${Number(item.price).toLocaleString()} د.ع</p>
                         </div>
                     </div>
                     <div class="flex items-center gap-2">
@@ -794,11 +823,22 @@
             const catData = { name, image };
 
             try {
-                await setDoc(doc(db, 'artifacts', appId, 'categories', newCatId), catData);
+                if (db && !isOfflineMode) {
+                    await setDoc(doc(db, 'artifacts', appId, 'categories', newCatId), catData);
+                }
+                // تحديث محلي مباشر لضمان استجابة فورية
+                if (!categories.some(c => c.name === name)) {
+                    categories.push({ id: newCatId, ...catData });
+                }
+                renderCategories();
+                populateCategoryDropdown();
+                renderAdminCategoriesTable();
+                
                 document.getElementById('cat-name-input').value = '';
                 document.getElementById('cat-image-input').value = '';
                 showCustomAlert('تم بنجاح', 'تمت إضافة التصنيف الجديد بنجاح.', 'success');
             } catch (e) {
+                console.error("Error saving category:", e);
                 categories.push({ id: newCatId, ...catData });
                 renderCategories();
                 populateCategoryDropdown();
@@ -809,6 +849,7 @@
 
         window.renderAdminCategoriesTable = function() {
             const tbody = document.getElementById('admin-categories-table');
+            if (!tbody) return;
             tbody.innerHTML = '';
             categories.forEach(cat => {
                 if (cat.name === 'الكل') return;
@@ -827,9 +868,16 @@
 
         window.deleteCategory = async function(catId) {
             try {
-                await deleteDoc(doc(db, 'artifacts', appId, 'categories', catId));
+                if (db && !isOfflineMode) {
+                    await deleteDoc(doc(db, 'artifacts', appId, 'categories', catId));
+                }
+                categories = categories.filter(c => c.id !== catId);
+                renderCategories();
+                populateCategoryDropdown();
+                renderAdminCategoriesTable();
                 showCustomAlert('تم الحذف', 'تم حذف التصنيف بنجاح.', 'success');
             } catch (e) {
+                console.error("Error deleting category:", e);
                 categories = categories.filter(c => c.id !== catId);
                 renderCategories();
                 populateCategoryDropdown();
@@ -851,21 +899,34 @@
 
             try {
                 if (editId) {
-                    await updateDoc(doc(db, 'artifacts', appId, 'products', editId), productData);
+                    if (db && !isOfflineMode) {
+                        await updateDoc(doc(db, 'artifacts', appId, 'products', editId), productData);
+                    }
+                    const index = products.findIndex(p => p.id === editId);
+                    if (index !== -1) {
+                        products[index] = { id: editId, ...productData };
+                    }
                     showCustomAlert('تم بنجاح', 'تم تحديث بيانات المنتج بنجاح.', 'success');
                 } else {
                     const newId = 'prod-' + Date.now();
-                    await setDoc(doc(db, 'artifacts', appId, 'products', newId), productData);
+                    if (db && !isOfflineMode) {
+                        await setDoc(doc(db, 'artifacts', appId, 'products', newId), productData);
+                    }
+                    products.push({ id: newId, ...productData });
                     showCustomAlert('تم بنجاح', 'تمت إضافة المنتج الجديد بنجاح.', 'success');
                 }
+                renderProducts();
+                renderAdminProductsTable();
                 resetProductForm();
             } catch (e) {
+                console.error("Error saving product:", e);
                 showCustomAlert('خطأ', 'حدث خطأ أثناء حفظ المنتج.', 'error');
             }
         }
 
         window.renderAdminProductsTable = function() {
             const tbody = document.getElementById('admin-products-table');
+            if (!tbody) return;
             tbody.innerHTML = '';
             products.forEach(p => {
                 const tr = document.createElement('tr');
@@ -874,7 +935,7 @@
                     <td class="p-3"><img src="${p.image}" class="w-12 h-12 rounded-xl object-cover bg-stone-100" onerror="this.src='https://placehold.co/100x100/fce7f3/db2777?text=صورة'"></td>
                     <td class="p-3 font-bold text-stone-900">${p.name}</td>
                     <td class="p-3 text-stone-600">${p.category}</td>
-                    <td class="p-3 font-bold text-pink-700">${p.price.toLocaleString()} د.ع</td>
+                    <td class="p-3 font-bold text-pink-700">${Number(p.price).toLocaleString()} د.ع</td>
                     <td class="p-3 text-center flex items-center justify-center gap-2">
                         <button onclick="editProduct('${p.id}')" class="text-pink-600 hover:text-pink-800 p-2"><i class="fa-solid fa-pen-to-square"></i></button>
                         <button onclick="deleteProduct('${p.id}')" class="text-red-500 hover:text-red-700 p-2"><i class="fa-solid fa-trash-can"></i></button>
@@ -908,9 +969,15 @@
 
         window.deleteProduct = async function(productId) {
             try {
-                await deleteDoc(doc(db, 'artifacts', appId, 'products', productId));
+                if (db && !isOfflineMode) {
+                    await deleteDoc(doc(db, 'artifacts', appId, 'products', productId));
+                }
+                products = products.filter(p => p.id !== productId);
+                renderProducts();
+                renderAdminProductsTable();
                 showCustomAlert('تم الحذف', 'تم حذف المنتج بنجاح.', 'success');
             } catch (e) {
+                console.error("Error deleting product:", e);
                 showCustomAlert('خطأ', 'حدث خطأ أثناء حذف المنتج.', 'error');
             }
         }
@@ -923,10 +990,12 @@
             }
 
             try {
-                const settingsRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings');
-                await setDoc(settingsRef, { logoUrl: url }, { merge: true });
+                if (db && !isOfflineMode) {
+                    const settingsRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings');
+                    await setDoc(settingsRef, { logoUrl: url }, { merge: true });
+                }
                 document.getElementById('store-logo-img').src = url;
-                showCustomAlert('تم بنجاح', 'تم حفظ وتحديث شعار المتجر سحابياً بنجاح.', 'success');
+                showCustomAlert('تم بنجاح', 'تم حفظ وتحديث شعار المتجر بنجاح.', 'success');
             } catch (e) {
                 document.getElementById('store-logo-img').src = url;
                 showCustomAlert('تم بنجاح', 'تم تحديث الشعار محلياً.', 'success');
