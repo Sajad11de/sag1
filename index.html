@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>كماليات آثار — متجر العناية بالبشرة</title>
+<title>لمسة — متجر العناية بالبشرة</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Reem+Kufi:wght@400;500;700&display=swap" rel="stylesheet">
@@ -11,8 +11,29 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.24.7/babel.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyAVE25IVoicL56umLCqzQWvT7-uMdOxlLE",
+    authDomain: "cosmetic-athar.firebaseapp.com",
+    projectId: "cosmetic-athar",
+    storageBucket: "cosmetic-athar.firebasestorage.app",
+    messagingSenderId: "546675354689",
+    appId: "1:546675354689:web:1b15b2de9066fbfca7aac0",
+    measurementId: "G-9PJLXVJW90"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
 <style>
   :root{
     --cream:#FAF5F0;
@@ -55,18 +76,12 @@
     padding:16px 24px;
   }
   .brand{
-    font-family:'Reem Kufi', 'Cairo', sans-serif;
-    font-size:28px; color:var(--plum); letter-spacing:0.5px;
+    font-family:'Reem Kufi', sans-serif;
+    font-size:26px; color:var(--plum); letter-spacing:0.5px;
     cursor:pointer; user-select:none;
     display:flex; align-items:center; gap:8px;
-    font-weight:700;
   }
   .brand-dot{width:8px;height:8px;border-radius:50%;background:var(--rose);}
-  .brand-logo-img{
-    max-height:40px;
-    max-width:120px;
-    object-fit:contain;
-  }
   .nav-links{
     display:flex; gap:28px; list-style:none; margin:0; padding:0;
   }
@@ -95,72 +110,6 @@
     font-size:12px; font-weight:800;
   }
   .nav-toggle{display:none; background:none; border:none; font-size:24px; color:var(--plum); cursor:pointer;}
-
-  /* ===== SEARCH ===== */
-  .search-container{
-    flex:1; max-width:400px; margin:0 20px;
-  }
-  .search-input{
-    width:100%; padding:10px 16px;
-    border-radius:999px; border:1px solid var(--line);
-    background:var(--paper); color:var(--ink);
-    font-family:'Cairo',sans-serif; font-size:14px;
-    transition:border-color .2s ease, box-shadow .2s ease;
-  }
-  .search-input:focus{
-    outline:none; border-color:var(--rose);
-    box-shadow:0 0 0 3px rgba(201,138,155,0.15);
-  }
-  .search-input::placeholder{color:#a3948d;}
-  .search-results{
-    position:absolute; top:100%; left:0; right:0;
-    background:var(--paper); border-radius:12px;
-    box-shadow:0 12px 30px rgba(0,0,0,0.12);
-    max-height:300px; overflow-y:auto;
-    margin-top:8px; z-index:100;
-    display:none;
-  }
-  .search-results.show{display:block;}
-  .search-result-item{
-    padding:12px 16px; cursor:pointer;
-    border-bottom:1px solid var(--line);
-    display:flex; align-items:center; gap:12px;
-    transition:background .15s ease;
-  }
-  .search-result-item:hover{background:var(--cream-2);}
-  .search-result-item:last-child{border-bottom:none;}
-  .search-result-icon{
-    width:40px; height:40px; border-radius:8px;
-    display:flex; align-items:center; justify-content:center;
-    font-size:20px; flex-shrink:0;
-  }
-  .search-result-info{flex:1;}
-  .search-result-name{font-weight:700; font-size:14px; color:var(--plum);}
-  .search-result-cat{font-size:12px; color:#a3948d;}
-  .search-no-results{
-    padding:16px; text-align:center; color:#a3948d; font-size:13px;
-  }
-  .mobile-search-btn{
-    display:none; background:none; border:none; font-size:20px; color:var(--plum); cursor:pointer; margin-left:10px;
-  }
-  .mobile-search-modal{
-    display:none; position:fixed; top:0; left:0; right:0; bottom:0;
-    background:var(--cream); z-index:100; padding:20px;
-  }
-  .mobile-search-modal.open{display:block;}
-  .mobile-search-header{
-    display:flex; align-items:center; gap:12px; margin-bottom:20px;
-  }
-  .mobile-search-input{
-    flex:1; padding:12px 16px; border-radius:12px; border:1px solid var(--line);
-    background:var(--paper); color:var(--ink); font-family:'Cairo',sans-serif; font-size:16px;
-  }
-  .mobile-search-close{
-    background:none; border:none; font-size:24px; color:var(--plum); cursor:pointer;
-  }
-  @media (max-width:820px){
-    .mobile-search-btn{display:block;}
-  }
 
   /* ===== HERO ===== */
   .hero{
@@ -243,10 +192,6 @@
     width:78px; height:78px; border-radius:18px;
     display:flex; align-items:center; justify-content:center; font-size:30px;
     transition:transform .15s ease;
-    overflow:hidden;
-  }
-  .cat-tile-icon img{
-    width:100%; height:100%; object-fit:cover;
   }
   .cat-tile:hover .cat-tile-icon{transform:translateY(-3px);}
   .cat-tile-label{
@@ -505,7 +450,6 @@
     }
     .nav-links.open{transform:translateY(0);}
     .nav-toggle{display:block;}
-    .search-container{display:none;}
   }
 </style>
 </head>
@@ -531,20 +475,15 @@ const storage = firebase.storage();
 
 const CATEGORIES = [
   { id: "cleansers", name: "غسولات", color: "#C98A9B", icon: "🫧",
-    desc: "لتنظيف عميق ولطيف يومي يحافظ على توازن البشرة.",
-    imageUrl: "" },
+    desc: "لتنظيف عميق ولطيف يومي يحافظ على توازن البشرة." },
   { id: "creams", name: "كريمات", color: "#8FA37E", icon: "🧴",
-    desc: "تركيبات غنية للترطيب وإصلاح البشرة.",
-    imageUrl: "" },
+    desc: "تركيبات غنية للترطيب وإصلاح البشرة." },
   { id: "serums", name: "سيروم", color: "#B08968", icon: "💧",
-    desc: "تركيزات فعّالة تستهدف مشاكل البشرة بدقة.",
-    imageUrl: "" },
+    desc: "تركيزات فعّالة تستهدف مشاكل البشرة بدقة." },
   { id: "moisturizers", name: "مرطبات", color: "#7C9CB5", icon: "🌿",
-    desc: "حماية ورطوبة تدوم طوال اليوم.",
-    imageUrl: "" },
+    desc: "حماية ورطوبة تدوم طوال اليوم." },
   { id: "masks", name: "ماسكات", color: "#A97C8E", icon: "✨",
-    desc: "عناية مكثفة أسبوعية لإشراقة فورية.",
-    imageUrl: "" },
+    desc: "عناية مكثفة أسبوعية لإشراقة فورية." },
 ];
 
 // هذه القائمة تُستخدم فقط كبيانات أولية تُستورد مرة واحدة إلى Firestore من لوحة الإدارة.
@@ -594,160 +533,21 @@ function stockLabel(stock){
 const DELIVERY_FEE = 5000;
 const GOVERNORATES = ["بغداد","البصرة","نينوى","أربيل","السليمانية","دهوك","كركوك","النجف","كربلاء","بابل","المثنى","الديوانية","واسط","ديالى","الأنبار","صلاح الدين","ميسان","ذي قار"];
 
-function Nav({ cartCount, onCartClick, onNavClick, logoUrl, products, categories }){
+function Nav({ cartCount, onCartClick, onNavClick }){
   const [open, setOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [showResults, setShowResults] = useState(false);
-  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
-  const searchRef = useRef(null);
-
   const handleClick = (id) => { setOpen(false); onNavClick(id); };
-
-  // البحث الذكي في المنتجات
-  useEffect(() => {
-    if (searchQuery.trim().length === 0) {
-      setSearchResults([]);
-      setShowResults(false);
-      return;
-    }
-
-    const query = searchQuery.trim().toLowerCase();
-    const normalizedQuery = query
-      .replace(/[أإآ]/g, 'ا')
-      .replace(/[ىي]/g, 'ي')
-      .replace(/[هة]/g, 'ه')
-      .replace(/[ؤو]/g, 'و')
-      .replace(/[ئ]/g, 'ي');
-
-    const results = products.filter(product => {
-      const productName = product.name.toLowerCase();
-      const productDesc = (product.desc || "").toLowerCase();
-      const catName = (categories.find(c => c.id === product.cat)?.name || "").toLowerCase();
-
-      const normalizedName = productName
-        .replace(/[أإآ]/g, 'ا')
-        .replace(/[ىي]/g, 'ي')
-        .replace(/[هة]/g, 'ه')
-        .replace(/[ؤو]/g, 'و')
-        .replace(/[ئ]/g, 'ي');
-
-      const normalizedDesc = productDesc
-        .replace(/[أإآ]/g, 'ا')
-        .replace(/[ىي]/g, 'ي')
-        .replace(/[هة]/g, 'ه')
-        .replace(/[ؤو]/g, 'و')
-        .replace(/[ئ]/g, 'ي');
-
-      const normalizedCat = catName
-        .replace(/[أإآ]/g, 'ا')
-        .replace(/[ىي]/g, 'ي')
-        .replace(/[هة]/g, 'ه')
-        .replace(/[ؤو]/g, 'و')
-        .replace(/[ئ]/g, 'ي');
-
-      return normalizedName.includes(normalizedQuery) ||
-             normalizedDesc.includes(normalizedQuery) ||
-             normalizedCat.includes(normalizedQuery) ||
-             productName.includes(query) ||
-             productDesc.includes(query) ||
-             catName.includes(query);
-    }).slice(0, 8);
-
-    setSearchResults(results);
-    setShowResults(results.length > 0);
-  }, [searchQuery, products, categories]);
-
-  // إغلاق النتائج عند النقر خارجها
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (searchRef.current && !searchRef.current.contains(event.target)) {
-        setShowResults(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  const handleResultClick = (product) => {
-    setShowResults(false);
-    setMobileSearchOpen(false);
-    setSearchQuery("");
-    onNavClick(product.cat);
-  };
-
   return (
     <div className="nav">
       <div className="nav-inner">
         <div className="brand" onClick={() => handleClick("top")}>
-          {logoUrl ? (
-            <img src={logoUrl} alt="الشعار" className="brand-logo-img" />
-          ) : (
-            <React.Fragment>
-              <span className="brand-dot"></span> كماليات آثار
-            </React.Fragment>
-          )}
+          <span className="brand-dot"></span> لمسة
         </div>
-        <div className="search-container" style={{position:"relative"}} ref={searchRef}>
-          <input
-            type="text"
-            className="search-input"
-            placeholder="ابحثي عن منتج..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onFocus={() => searchResults.length > 0 && setShowResults(true)}
-          />
-          {showResults && (
-            <div className="search-results show">
-              {searchResults.map(product => {
-                const category = categories.find(c => c.id === product.cat);
-                return (
-                  <div
-                    key={product.id}
-                    className="search-result-item"
-                    onClick={() => handleResultClick(product)}
-                  >
-                    <div className="search-result-icon" style={{background: category?.color + "26"}}>
-                      {category?.icon}
-                    </div>
-                    <div className="search-result-info">
-                      <div className="search-result-name">{product.name}</div>
-                      <div className="search-result-cat">{category?.name}</div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
+        <ul className={"nav-links" + (open ? " open" : "")}>
+          {CATEGORIES.map(c => (
+            <li key={c.id}><a onClick={() => handleClick(c.id)}>{c.name}</a></li>
+          ))}
+        </ul>
         <div style={{display:"flex", alignItems:"center", gap:10}}>
-          <button className="mobile-search-btn" onClick={() => setMobileSearchOpen(true)}>🔍</button>
-          <div style={{display:"flex", gap:8, alignItems:"center"}}>
-            {CATEGORIES.map(c => (
-              <button
-                key={c.id}
-                onClick={() => handleClick(c.id)}
-                style={{
-                  background:"var(--paper)",
-                  border:"1px solid var(--line)",
-                  borderRadius:"8px",
-                  padding:"8px 12px",
-                  fontSize:"12px",
-                  fontWeight:"700",
-                  color:"var(--plum)",
-                  cursor:"pointer",
-                  transition:"all .2s ease",
-                  display:"flex",
-                  alignItems:"center",
-                  gap:4
-                }}
-                onMouseEnter={(e) => e.target.style.background = "var(--cream-2)"}
-                onMouseLeave={(e) => e.target.style.background = "var(--paper)"}
-              >
-                {c.icon} {c.name}
-              </button>
-            ))}
-          </div>
           <button className="cart-btn" onClick={onCartClick}>
             السلة
             {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
@@ -755,43 +555,6 @@ function Nav({ cartCount, onCartClick, onNavClick, logoUrl, products, categories
           <button className="nav-toggle" onClick={() => setOpen(o=>!o)}>☰</button>
         </div>
       </div>
-      {mobileSearchOpen && (
-        <div className="mobile-search-modal open">
-          <div className="mobile-search-header">
-            <input
-              type="text"
-              className="mobile-search-input"
-              placeholder="ابحثي عن منتج..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              autoFocus
-            />
-            <button className="mobile-search-close" onClick={() => setMobileSearchOpen(false)}>✕</button>
-          </div>
-          {showResults && (
-            <div className="search-results show" style={{position:"relative", margin:0, boxShadow:"none"}}>
-              {searchResults.map(product => {
-                const category = categories.find(c => c.id === product.cat);
-                return (
-                  <div
-                    key={product.id}
-                    className="search-result-item"
-                    onClick={() => handleResultClick(product)}
-                  >
-                    <div className="search-result-icon" style={{background: category?.color + "26"}}>
-                      {category?.icon}
-                    </div>
-                    <div className="search-result-info">
-                      <div className="search-result-name">{product.name}</div>
-                      <div className="search-result-cat">{category?.name}</div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      )}
     </div>
   );
 }
@@ -1044,10 +807,6 @@ function AdminPage({ categories, onBack }){
   const [status, setStatus] = useState("");
   const [saving, setSaving] = useState(false);
   const [stockEdits, setStockEdits] = useState({});
-  const [logoUrl, setLogoUrl] = useState("");
-  const [logoUploading, setLogoUploading] = useState(false);
-  const [logoUploadError, setLogoUploadError] = useState("");
-  const [categoryImages, setCategoryImages] = useState({});
 
   useEffect(() => {
     const unsub = db.collection("products").onSnapshot(
@@ -1062,21 +821,6 @@ function AdminPage({ categories, onBack }){
       }
     );
     return () => unsub();
-  }, []);
-
-  useEffect(() => {
-    db.collection("settings").doc("logo").get().then(doc => {
-      if (doc.exists && doc.data().url) {
-        setLogoUrl(doc.data().url);
-      }
-    }).catch(console.error);
-
-    // Load category images
-    db.collection("settings").doc("categories").get().then(doc => {
-      if (doc.exists && doc.data().images) {
-        setCategoryImages(doc.data().images);
-      }
-    }).catch(console.error);
   }, []);
 
   const resetForm = () => { setName(""); setImageUrl(""); setUploadError(""); setPrice(""); setDiscount(""); setStock(""); setDesc(""); };
@@ -1169,122 +913,12 @@ function AdminPage({ categories, onBack }){
     }
   };
 
-  const handleLogoUpload = async (e) => {
-    const file = e.target.files[0];
-    e.target.value = "";
-    if (!file) return;
-    setLogoUploadError("");
-    setLogoUploading(true);
-    try {
-      const path = "logo/" + Date.now() + "_" + file.name.replace(/[^a-zA-Z0-9.\-_]/g, "_");
-      const ref = storage.ref().child(path);
-      await ref.put(file);
-      const url = await ref.getDownloadURL();
-      setLogoUrl(url);
-      await db.collection("settings").doc("logo").set({ url });
-      setStatus("✅ تم تحديث الشعار بنجاح");
-    } catch (error) {
-      setLogoUploadError("❌ تعذر رفع الشعار: " + error.message);
-    }
-    setLogoUploading(false);
-  };
-
-  const handleLogoUrlChange = async (e) => {
-    const url = e.target.value;
-    setLogoUrl(url);
-    try {
-      await db.collection("settings").doc("logo").set({ url });
-      setStatus("✅ تم تحديث الشعار بنجاح");
-    } catch (error) {
-      setLogoUploadError("❌ تعذر تحديث الشعار: " + error.message);
-    }
-  };
-
-  const handleCategoryImageUrlChange = async (categoryId, url) => {
-    setCategoryImages(prev => ({ ...prev, [categoryId]: url }));
-    try {
-      await db.collection("settings").doc("categories").set({
-        images: { ...categoryImages, [categoryId]: url }
-      }, { merge: true });
-      setStatus("✅ تم تحديث صورة القسم بنجاح");
-    } catch (error) {
-      setCategoryUploadError(prev => ({ ...prev, [categoryId]: "❌ تعذر تحديث الصورة: " + error.message }));
-    }
-  };
-
   return (
     <div className="admin-page">
       <div className="admin-head">
         <h2 className="display">لوحة إدارة المنتجات</h2>
         <button className="back-btn" onClick={onBack}>→ العودة للمتجر</button>
       </div>
-
-      <form className="admin-form">
-        <h3>إعدادات الشعار</h3>
-        <label>
-          رفع صورة الشعار
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleLogoUpload}
-            disabled={logoUploading}
-          />
-        </label>
-        {logoUploading && <p style={{fontSize:12.5, color:"var(--plum)", margin:0}}>⏳ جاري رفع الشعار...</p>}
-        {logoUploadError && <p style={{fontSize:12.5, color:"var(--rose-dark)", margin:0}}>{logoUploadError}</p>}
-        {logoUrl && (
-          <div style={{display:"flex", flexDirection:"column", gap:6}}>
-            <img src={logoUrl} alt="معاينة الشعار" className="admin-image-preview" loading="lazy" decoding="async" onError={(e) => { e.target.style.display = "none"; }} />
-            <button type="button" className="btn-ghost" onClick={() => { setLogoUrl(""); db.collection("settings").doc("logo").delete(); }} style={{alignSelf:"flex-start", fontSize:12}}>إزالة الشعار</button>
-          </div>
-        )}
-        <details>
-          <summary style={{fontSize:12.5, color:"#a3948d", cursor:"pointer"}}>أو الصقي رابط صورة مباشر</summary>
-          <input
-            type="url"
-            value={logoUrl}
-            onChange={handleLogoUrlChange}
-            placeholder="https://example.com/logo.png"
-            style={{marginTop:8, width:"100%", padding:"10px 12px", borderRadius:8, border:"1px solid var(--line)", fontFamily:"inherit", fontSize:14}}
-          />
-        </details>
-      </form>
-
-      <form className="admin-form">
-        <h3>صور التصنيفات</h3>
-        {categories.map(cat => (
-          <div key={cat.id} style={{padding:"12px 0", borderBottom:"1px solid var(--line)"}}>
-            <label style={{display:"flex", flexDirection:"column", gap:6px, fontSize:13.5, fontWeight:700, color:"var(--plum)"}}>
-              {cat.icon} {cat.name}
-              <input
-                type="url"
-                value={categoryImages[cat.id] || ""}
-                onChange={(e) => handleCategoryImageUrlChange(cat.id, e.target.value)}
-                placeholder="رابط صورة التصنيف"
-                style={{marginTop:4, padding:"8px 10px", borderRadius:8, border:"1px solid var(--line)", fontFamily:"inherit", fontSize:14}}
-              />
-            </label>
-            {categoryImages[cat.id] && (
-              <div style={{display:"flex", flexDirection:"column", gap:6, marginTop:8}}>
-                <img src={categoryImages[cat.id]} alt={cat.name} className="admin-image-preview" loading="lazy" decoding="async" onError={(e) => { e.target.style.display = "none"; }} />
-                <button
-                  type="button"
-                  className="btn-ghost"
-                  onClick={() => {
-                    const newImages = { ...categoryImages };
-                    delete newImages[cat.id];
-                    setCategoryImages(newImages);
-                    db.collection("settings").doc("categories").set({ images: newImages }, { merge: true });
-                  }}
-                  style={{alignSelf:"flex-start", fontSize:12}}
-                >
-                  إزالة الصورة
-                </button>
-              </div>
-            )}
-          </div>
-        ))}
-      </form>
 
       <form className="admin-form" onSubmit={handleAdd}>
         <h3>إضافة منتج جديد</h3>
@@ -1413,23 +1047,6 @@ function Store(){
 
   const [products, setProducts] = useState([]);
   const [productsLoaded, setProductsLoaded] = useState(false);
-  const [logoUrl, setLogoUrl] = useState(null);
-  const [categoryImages, setCategoryImages] = useState({});
-
-  useEffect(() => {
-    db.collection("settings").doc("logo").get().then(doc => {
-      if (doc.exists && doc.data().url) {
-        setLogoUrl(doc.data().url);
-      }
-    }).catch(console.error);
-
-    // Load category images
-    db.collection("settings").doc("categories").get().then(doc => {
-      if (doc.exists && doc.data().images) {
-        setCategoryImages(doc.data().images);
-      }
-    }).catch(console.error);
-  }, []);
 
   useEffect(() => {
     const unsub = db.collection("products").onSnapshot(
@@ -1547,10 +1164,39 @@ function Store(){
 
   return (
     <React.Fragment>
-      <Nav cartCount={cartCount} onCartClick={() => setDrawerOpen(true)} onNavClick={goTo} logoUrl={logoUrl} products={products} categories={CATEGORIES} />
+      <Nav cartCount={cartCount} onCartClick={() => setDrawerOpen(true)} onNavClick={goTo} />
 
       {activePage === null ? (
         <React.Fragment>
+          <div className="hero">
+            <div>
+              <div className="hero-eyebrow">عناية يومية بالبشرة</div>
+              <h1 className="display">جمالك يبدأ بروتين بسيط، يُصنع بعناية</h1>
+              <p>مجموعة مختارة من الغسولات والكريمات والسيرومات، مصممة لتناسب كل نوع بشرة — بمكونات واضحة ونتائج نلمسها.</p>
+              <div className="hero-actions">
+                <button className="btn-primary" onClick={() => goTo("cleansers")}>تسوقي الآن</button>
+                <button className="btn-ghost" onClick={() => goTo("serums")}>اكتشفي السيروم</button>
+              </div>
+            </div>
+            <div className="hero-visual">
+              <div className="hero-jar"></div>
+            </div>
+          </div>
+
+          <div className="cat-strip-wrap">
+            <div className="cat-strip-head">
+              <h3>التصنيفات</h3>
+            </div>
+            <div className="cat-strip">
+              {CATEGORIES.map(c => (
+                <button key={c.id} className="cat-tile" onClick={() => goTo(c.id)}>
+                  <span className="cat-tile-icon" style={{background: c.color + "26"}}>{c.icon}</span>
+                  <span className="cat-tile-label">{c.name}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
           {mixedProducts.length > 0 && (
             <div className="section">
               <div className="section-head">
