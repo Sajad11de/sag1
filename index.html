@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
         body {
             font-family: 'Cairo', sans-serif;
             background-color: #fffafb;
@@ -26,7 +29,7 @@
 
     <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-pink-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <div id="store-logo-container" class="flex items-center gap-3 cursor-pointer select-none" onclick="goToHome()" title="انقر مرتين للوصول للوحة التحكم">
+            <div id="store-logo-container" class="flex items-center gap-3 cursor-pointer select-none transition-all duration-200 active:scale-95" onclick="goToHome()" title="انقر مرتين للوصول للوحة التحكم">
                 <div class="w-12 h-12 rounded-2xl bg-pink-100 flex items-center justify-center overflow-hidden border border-pink-200 shadow-sm">
                     <img id="store-logo-img" src="https://placehold.co/100x100/fce7f3/db2777?text=آثار" alt="شعار كماليات آثار" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/fce7f3/db2777?text=آثار'">
                 </div>
@@ -37,10 +40,10 @@
             </div>
 
             <div class="flex items-center gap-3">
-                <button onclick="openCartModal()" class="relative bg-pink-50 hover:bg-pink-100 text-stone-800 px-4 py-2.5 rounded-xl font-bold flex items-center gap-2 transition border border-pink-200/60 shadow-sm">
+                <button onclick="openCartModal()" class="relative bg-pink-50 hover:bg-pink-100 text-stone-800 px-4 py-2.5 rounded-xl font-bold flex items-center gap-2 transition-all duration-200 active:scale-95 border border-pink-200/60 shadow-sm">
                     <i class="fa-solid fa-bag-shopping text-pink-600 text-lg"></i>
                     <span class="hidden sm:inline">السلة</span>
-                    <span id="cart-badge" class="absolute -top-2 -right-2 bg-pink-600 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center font-black shadow">0</span>
+                    <span id="cart-badge" class="absolute -top-2 -right-2 bg-pink-600 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center font-black shadow transition-all duration-300">0</span>
                 </button>
             </div>
         </div>
@@ -48,8 +51,8 @@
         <div class="bg-pink-50/70 border-t border-pink-100/60 py-3 px-4">
             <div class="max-w-3xl mx-auto relative">
                 <i class="fa-solid fa-magnifying-glass absolute right-4 top-1/2 -translate-y-1/2 text-pink-500 text-lg"></i>
-                <input type="text" id="main-search-input" oninput="handleSearch(this.value)" placeholder="ابحثي عن منتج للعناية، مكياج، أو علامة تجارية..." class="w-full pl-4 pr-12 py-3 bg-white border border-pink-200 rounded-2xl shadow-inner focus:outline-none focus:ring-2 focus:ring-pink-500 font-medium text-stone-800 placeholder-stone-400">
-                <button onclick="clearSearch()" id="clear-search-btn" class="hidden absolute left-4 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600">
+                <input type="text" id="main-search-input" oninput="handleSearch(this.value)" placeholder="ابحثي عن منتج للعناية، مكياج، أو علامة تجارية..." class="w-full pl-4 pr-12 py-3 bg-white border border-pink-200 rounded-2xl shadow-inner focus:outline-none focus:ring-2 focus:ring-pink-500 font-medium text-stone-800 placeholder-stone-400 transition-all duration-200">
+                <button onclick="clearSearch()" id="clear-search-btn" class="hidden absolute left-4 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 transition-all duration-200 active:scale-95">
                     <i class="fa-solid fa-circle-xmark text-lg"></i>
                 </button>
             </div>
@@ -75,7 +78,7 @@
                     <h2 id="section-title" class="text-xl font-black text-stone-900">جميع المنتجات المختارة</h2>
                     <p id="section-subtitle" class="text-xs text-stone-500 mt-0.5">تسوقي أحدث منتجات العناية والمكياج</p>
                 </div>
-                <div class="text-xs font-bold text-pink-700 bg-pink-50 px-2.5 py-1 rounded-lg border border-pink-200">
+                <div class="text-xs font-bold text-pink-700 bg-pink-50 px-2.5 py-1 rounded-lg border border-pink-200 transition-all">
                     <span id="products-count">0</span> منتج
                 </div>
             </div>
@@ -83,13 +86,13 @@
             <div id="products-grid" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
             </div>
 
-            <div id="no-products-found" class="hidden text-center py-20">
+            <div id="no-products-found" class="hidden text-center py-20 animate-in fade-in duration-300">
                 <div class="w-16 h-16 bg-pink-100 text-pink-600 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">
                     <i class="fa-solid fa-box-open"></i>
                 </div>
                 <h3 class="text-base font-bold text-stone-800">لا توجد منتجات مطابقة لبحثك</h3>
                 <p class="text-stone-500 text-xs mt-1">جربي البحث بكلمات أخرى أو تصفح قسم آخر.</p>
-                <button onclick="clearSearch()" class="mt-4 px-4 py-2 bg-pink-600 text-white rounded-xl font-bold text-xs hover:bg-pink-700 transition">إلغاء البحث وعرض الكل</button>
+                <button onclick="clearSearch()" class="mt-4 px-4 py-2 bg-pink-600 text-white rounded-xl font-bold text-xs hover:bg-pink-700 transition-all duration-200 active:scale-95">إلغاء البحث وعرض الكل</button>
             </div>
         </section>
     </main>
@@ -109,7 +112,7 @@
                 <h3 class="text-lg font-black text-stone-900 flex items-center gap-2">
                     <i class="fa-solid fa-bag-shopping text-pink-600"></i> سلة المشتريات وإتمام الطلب
                 </h3>
-                <button onclick="closeCartModal()" class="w-9 h-9 bg-pink-100 hover:bg-pink-200 text-pink-700 rounded-full flex items-center justify-center transition">
+                <button onclick="closeCartModal()" class="w-9 h-9 bg-pink-100 hover:bg-pink-200 text-pink-700 rounded-full flex items-center justify-center transition-all duration-200 active:scale-95">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -125,16 +128,16 @@
                     </h4>
                     <div>
                         <label class="block text-xs font-bold text-stone-700 mb-1">اسم الزبونة الكريمة:</label>
-                        <input type="text" id="customer-name" placeholder="أدخلي اسمك الكامل..." class="w-full px-3.5 py-2.5 bg-white border border-pink-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none">
+                        <input type="text" id="customer-name" placeholder="أدخلي اسمك الكامل..." class="w-full px-3.5 py-2.5 bg-white border border-pink-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all">
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-stone-700 mb-1">رقم الهاتف:</label>
-                        <input type="tel" id="customer-phone" placeholder="07xxxxxxxxx" class="w-full px-3.5 py-2.5 bg-white border border-pink-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none">
+                        <input type="tel" id="customer-phone" placeholder="07xxxxxxxxx" class="w-full px-3.5 py-2.5 bg-white border border-pink-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all">
                     </div>
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="block text-xs font-bold text-stone-700 mb-1">المحافظة:</label>
-                            <select id="customer-province" onchange="updateCartTotals()" class="w-full px-3.5 py-2.5 bg-white border border-pink-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none">
+                            <select id="customer-province" onchange="updateCartTotals()" class="w-full px-3.5 py-2.5 bg-white border border-pink-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all">
                                 <option value="بابل" data-fee="3000" selected>بابل (3,000 د.ع)</option>
                                 <option value="بغداد" data-fee="5000">بغداد (5,000 د.ع)</option>
                                 <option value="البصرة" data-fee="5000">البصرة (5,000 د.ع)</option>
@@ -147,7 +150,7 @@
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-stone-700 mb-1">المنطقة / القضاء:</label>
-                            <input type="text" id="customer-area" placeholder="اسم المنطقة أو الحي..." class="w-full px-3.5 py-2.5 bg-white border border-pink-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none">
+                            <input type="text" id="customer-area" placeholder="اسم المنطقة أو الحي..." class="w-full px-3.5 py-2.5 bg-white border border-pink-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all">
                         </div>
                     </div>
                 </div>
@@ -162,15 +165,15 @@
                     <span>قيمة التوصيل:</span>
                     <span id="cart-shipping-fee" class="font-bold">3,000 د.ع</span>
                 </div>
-                <div id="discount-row" class="flex justify-between items-center text-xs text-emerald-600 hidden">
+                <div id="discount-row" class="flex justify-between items-center text-xs text-emerald-600 hidden transition-all duration-300">
                     <span id="discount-label-text">الخصم المطبق:</span>
                     <span id="cart-discount-val" class="font-bold">-0 د.ع</span>
                 </div>
                 <div class="flex justify-between items-center text-base font-black text-stone-900 pt-2 border-t border-stone-200">
                     <span>الإجمالي الكلي النهائي:</span>
-                    <span id="cart-total-price" class="text-pink-700 text-xl">0 د.ع</span>
+                    <span id="cart-total-price" class="text-pink-700 text-xl transition-all duration-300">0 د.ع</span>
                 </div>
-                <button onclick="checkoutViaWhatsApp()" class="w-full mt-2 bg-emerald-600 hover:bg-emerald-700 text-white py-3.5 rounded-2xl font-bold flex items-center justify-center gap-2 transition shadow-lg shadow-emerald-600/20">
+                <button onclick="checkoutViaWhatsApp()" class="w-full mt-2 bg-emerald-600 hover:bg-emerald-700 text-white py-3.5 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all duration-200 active:scale-95 shadow-lg shadow-emerald-600/20">
                     <i class="fa-brands fa-whatsapp text-xl"></i> إتمام الطلب عبر واتساب
                 </button>
             </div>
@@ -179,7 +182,7 @@
 
     <!-- لوحة تحكم تسجيل الدخول -->
     <div id="admin-login-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl animate-in fade-in zoom-in duration-200">
             <div class="text-center mb-6">
                 <div class="w-16 h-16 bg-pink-100 text-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl shadow-inner">
                     <i class="fa-solid fa-lock"></i>
@@ -189,37 +192,35 @@
             </div>
             <form onsubmit="handleAdminLogin(event)">
                 <div class="mb-4">
-                    <input type="password" id="admin-password-input" placeholder="كلمة المرور (12345)" class="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-xl text-center tracking-widest text-lg font-bold focus:ring-2 focus:ring-pink-500 focus:outline-none" required>
+                    <input type="password" id="admin-password-input" placeholder="كلمة المرور (12345)" class="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-xl text-center tracking-widest text-lg font-bold focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all" required>
                 </div>
-                <button type="submit" class="w-full bg-stone-900 hover:bg-stone-800 text-white py-3 rounded-xl font-bold transition shadow">تسجيل الدخول</button>
+                <button type="submit" class="w-full bg-stone-900 hover:bg-stone-800 text-white py-3 rounded-xl font-bold transition-all duration-200 active:scale-95 shadow">تسجيل الدخول</button>
             </form>
-            <button onclick="closeAdminLoginModal()" class="w-full mt-3 text-stone-500 text-sm font-semibold hover:text-stone-800 py-2">إلغاء</button>
+            <button onclick="closeAdminLoginModal()" class="w-full mt-3 text-stone-500 text-sm font-semibold hover:text-stone-800 py-2 transition-all active:scale-95">إلغاء</button>
         </div>
     </div>
 
     <!-- لوحة التحكم الرئيسية -->
     <div id="admin-dashboard-modal" class="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-md hidden flex items-center justify-center p-2 sm:p-4">
-        <!-- المحتوى الخاص بلوحة التحكم كما هو في الكود الأصلي -->
-        <div class="bg-white rounded-3xl max-w-5xl w-full max-h-[95vh] flex flex-col shadow-2xl overflow-hidden">
+        <div class="bg-white rounded-3xl max-w-5xl w-full max-h-[95vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
             <div class="p-5 border-b border-stone-200 flex items-center justify-between bg-stone-900 text-white">
                 <div class="flex items-center gap-3">
                     <i class="fa-solid fa-sliders text-pink-400 text-xl"></i>
                     <h3 class="text-lg font-black">لوحة تحكم كماليات آثار</h3>
                 </div>
-                <button onclick="closeAdminDashboard()" class="w-9 h-9 bg-stone-800 hover:bg-stone-700 text-white rounded-full flex items-center justify-center transition">
+                <button onclick="closeAdminDashboard()" class="w-9 h-9 bg-stone-800 hover:bg-stone-700 text-white rounded-full flex items-center justify-center transition-all duration-200 active:scale-95">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
 
-            <div class="flex border-b border-stone-200 bg-stone-50 px-4 pt-2 gap-2 overflow-x-auto">
-                <button onclick="switchAdminTab('products')" id="tab-btn-products" class="px-5 py-3 font-bold text-sm border-b-2 border-pink-600 text-pink-700 bg-white rounded-t-xl transition">إدارة المنتجات</button>
-                <button onclick="switchAdminTab('categories')" id="tab-btn-categories" class="px-5 py-3 font-bold text-sm text-stone-600 hover:text-stone-900 transition">إدارة التصنيفات</button>
-                <button onclick="switchAdminTab('discount')" id="tab-btn-discount" class="px-5 py-3 font-bold text-sm text-stone-600 hover:text-stone-900 transition">إدارة الخصومات</button>
-                <button onclick="switchAdminTab('settings')" id="tab-btn-settings" class="px-5 py-3 font-bold text-sm text-stone-600 hover:text-stone-900 transition">إعدادات الشعار</button>
+            <div class="flex border-b border-stone-200 bg-stone-50 px-4 pt-2 gap-2 overflow-x-auto hide-scrollbar">
+                <button onclick="switchAdminTab('products')" id="tab-btn-products" class="px-5 py-3 font-bold text-sm border-b-2 border-pink-600 text-pink-700 bg-white rounded-t-xl transition-all duration-200">إدارة المنتجات</button>
+                <button onclick="switchAdminTab('categories')" id="tab-btn-categories" class="px-5 py-3 font-bold text-sm text-stone-600 hover:text-stone-900 transition-all duration-200">إدارة التصنيفات</button>
+                <button onclick="switchAdminTab('discount')" id="tab-btn-discount" class="px-5 py-3 font-bold text-sm text-stone-600 hover:text-stone-900 transition-all duration-200">إدارة الخصومات</button>
+                <button onclick="switchAdminTab('settings')" id="tab-btn-settings" class="px-5 py-3 font-bold text-sm text-stone-600 hover:text-stone-900 transition-all duration-200">إعدادات الشعار</button>
             </div>
 
             <div class="p-6 overflow-y-auto flex-grow bg-stone-50/50">
-                
                 <!-- إدارة المنتجات -->
                 <div id="admin-tab-products" class="space-y-6">
                     <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
@@ -230,28 +231,28 @@
                             <input type="hidden" id="edit-product-id">
                             <div>
                                 <label class="block text-xs font-bold text-stone-700 mb-1">اسم المنتج:</label>
-                                <input type="text" id="p-name" class="w-full px-3.5 py-2 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none" required>
+                                <input type="text" id="p-name" class="w-full px-3.5 py-2 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all" required>
                             </div>
                             <div>
                                 <label class="block text-xs font-bold text-stone-700 mb-1">التصنيف:</label>
-                                <select id="p-category" class="w-full px-3.5 py-2 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none" required>
+                                <select id="p-category" class="w-full px-3.5 py-2 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all" required>
                                 </select>
                             </div>
                             <div>
                                 <label class="block text-xs font-bold text-stone-700 mb-1">السعر (د.ع):</label>
-                                <input type="number" id="p-price" class="w-full px-3.5 py-2 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none" required>
+                                <input type="number" id="p-price" class="w-full px-3.5 py-2 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all" required>
                             </div>
                             <div>
                                 <label class="block text-xs font-bold text-stone-700 mb-1">رابط صورة المنتج:</label>
-                                <input type="url" id="p-image" placeholder="https://example.com/image.jpg" class="w-full px-3.5 py-2 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none" required>
+                                <input type="url" id="p-image" placeholder="https://example.com/image.jpg" class="w-full px-3.5 py-2 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all" required>
                             </div>
                             <div class="sm:col-span-2">
                                 <label class="block text-xs font-bold text-stone-700 mb-1">وصف المنتج:</label>
-                                <input type="text" id="p-desc" placeholder="وصف موجز للمنتج ومميزاته..." class="w-full px-3.5 py-2 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none" required>
+                                <input type="text" id="p-desc" placeholder="وصف موجز للمنتج ومميزاته..." class="w-full px-3.5 py-2 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all" required>
                             </div>
                             <div class="sm:col-span-3 flex gap-3 mt-2">
-                                <button type="submit" class="bg-pink-600 hover:bg-pink-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition shadow">حفظ المنتج</button>
-                                <button type="button" id="cancel-edit-btn" onclick="resetProductForm()" class="hidden bg-stone-200 hover:bg-stone-300 text-stone-700 px-5 py-2.5 rounded-xl font-bold text-sm transition">إلغاء التعديل</button>
+                                <button type="submit" class="bg-pink-600 hover:bg-pink-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 active:scale-95 shadow">حفظ المنتج</button>
+                                <button type="button" id="cancel-edit-btn" onclick="resetProductForm()" class="hidden bg-stone-200 hover:bg-stone-300 text-stone-700 px-5 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 active:scale-95">إلغاء التعديل</button>
                             </div>
                         </form>
                     </div>
@@ -285,14 +286,14 @@
                         <form onsubmit="saveCategory(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-xs font-bold text-stone-700 mb-1">اسم التصنيف:</label>
-                                <input type="text" id="cat-name-input" placeholder="مثال: عناية بالبشرة" class="w-full px-3.5 py-2 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none" required>
+                                <input type="text" id="cat-name-input" placeholder="مثال: عناية بالبشرة" class="w-full px-3.5 py-2 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all" required>
                             </div>
                             <div>
                                 <label class="block text-xs font-bold text-stone-700 mb-1">رابط صورة التصنيف:</label>
-                                <input type="url" id="cat-image-input" placeholder="https://example.com/category.jpg" class="w-full px-3.5 py-2 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none" required>
+                                <input type="url" id="cat-image-input" placeholder="https://example.com/category.jpg" class="w-full px-3.5 py-2 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all" required>
                             </div>
                             <div class="sm:col-span-2">
-                                <button type="submit" class="bg-pink-600 hover:bg-pink-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition shadow">حفظ التصنيف الجديد</button>
+                                <button type="submit" class="bg-pink-600 hover:bg-pink-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 active:scale-95 shadow">حفظ التصنيف الجديد</button>
                             </div>
                         </form>
                     </div>
@@ -323,7 +324,7 @@
                         <div class="space-y-4">
                             <div>
                                 <label class="block text-xs font-bold text-stone-700 mb-1">نوع الخصم:</label>
-                                <select id="admin-discount-type" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none">
+                                <select id="admin-discount-type" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all">
                                     <option value="none">بدون خصم</option>
                                     <option value="percentage">نسبة مئوية (%)</option>
                                     <option value="fixed">مبلغ ثابت (د.ع)</option>
@@ -331,13 +332,13 @@
                             </div>
                             <div>
                                 <label class="block text-xs font-bold text-stone-700 mb-1">قيمة الخصم:</label>
-                                <input type="number" id="admin-discount-value" placeholder="مثال: 10 تعني 10% أو 5000 تعني 5 آلاف دينار" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none">
+                                <input type="number" id="admin-discount-value" placeholder="مثال: 10 تعني 10% أو 5000 تعني 5 آلاف دينار" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all">
                             </div>
                             <div>
                                 <label class="block text-xs font-bold text-stone-700 mb-1">عنوان الخصم (يظهر للزبونة في السلة):</label>
-                                <input type="text" id="admin-discount-title" placeholder="مثال: خصم العيد الترويجي" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none">
+                                <input type="text" id="admin-discount-title" placeholder="مثال: خصم العيد الترويجي" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all">
                             </div>
-                            <button onclick="saveStoreDiscount()" class="bg-pink-600 hover:bg-pink-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition shadow">حفظ وتطبيق الخصم</button>
+                            <button onclick="saveStoreDiscount()" class="bg-pink-600 hover:bg-pink-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 active:scale-95 shadow">حفظ وتطبيق الخصم</button>
                         </div>
                     </div>
                 </div>
@@ -351,9 +352,9 @@
                         <div class="space-y-4 max-w-xl">
                             <div>
                                 <label class="block text-xs font-bold text-stone-700 mb-1">رابط صورة شعار المتجر:</label>
-                                <input type="url" id="store-logo-url-input" placeholder="https://example.com/logo.png" class="w-full px-3.5 py-2 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none">
+                                <input type="url" id="store-logo-url-input" placeholder="https://example.com/logo.png" class="w-full px-3.5 py-2 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all">
                             </div>
-                            <button onclick="updateStoreLogo()" class="bg-pink-600 hover:bg-pink-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition shadow">حفظ وتحديث الشعار سحابياً</button>
+                            <button onclick="updateStoreLogo()" class="bg-pink-600 hover:bg-pink-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 active:scale-95 shadow">حفظ وتحديث الشعار سحابياً</button>
                         </div>
                     </div>
                 </div>
@@ -363,13 +364,13 @@
 
     <!-- نافذة التنبيهات المخصصة -->
     <div id="custom-alert-modal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl">
-            <div id="alert-icon" class="w-16 h-16 bg-pink-100 text-pink-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl animate-in zoom-in duration-200">
+            <div id="alert-icon" class="w-16 h-16 bg-pink-100 text-pink-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl transition-transform hover:scale-110 duration-300">
                 <i class="fa-solid fa-circle-check"></i>
             </div>
             <h4 id="alert-title" class="text-lg font-black text-stone-900 mb-2">تنبيه</h4>
             <p id="alert-message" class="text-stone-600 text-sm mb-6">رسالة التنبيه هنا...</p>
-            <button onclick="closeCustomAlert()" class="w-full bg-stone-900 hover:bg-stone-800 text-white py-3 rounded-xl font-bold transition">حسناً</button>
+            <button onclick="closeCustomAlert()" class="w-full bg-stone-900 hover:bg-stone-800 text-white py-3 rounded-xl font-bold transition-all duration-200 active:scale-95">حسناً</button>
         </div>
     </div>
 
@@ -432,9 +433,7 @@
             setupHiddenAdminTrigger();
         });
 
-        // ----------------- تصحيح وإكمال المستمعات -----------------
         function initFirestoreListeners() {
-            // مستمع لإعدادات المتجر (اللوجو، الخصومات)
             const settingsDocRef = doc(db, 'store_settings', 'general'); 
             onSnapshot(settingsDocRef, (docSnap) => {
                 if (docSnap.exists()) {
@@ -454,11 +453,9 @@
                 }
             }, (error) => { console.error(error); });
 
-            // مستمع لتصنيفات المتجر
             const catRef = collection(db, 'categories');
             onSnapshot(catRef, (snapshot) => {
                 const fetchedCats = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                // إضافة خيار 'الكل' بشكل افتراضي إذا لم يكن موجوداً
                 if (!fetchedCats.find(c => c.name === 'الكل')) {
                     fetchedCats.unshift({ id: 'cat-all', name: 'الكل', image: 'https://placehold.co/100x100/fce7f3/db2777?text=الكل' });
                 }
@@ -466,7 +463,6 @@
                 renderApp();
             });
 
-            // مستمع لمنتجات المتجر
             const prodRef = collection(db, 'products');
             onSnapshot(prodRef, (snapshot) => {
                 products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -474,8 +470,6 @@
             });
         }
 
-        // ----------------- ربط الوظائف بالواجهة (Window Bindings) -----------------
-        
         window.renderApp = () => {
             renderCategories();
             renderProducts();
@@ -502,20 +496,18 @@
             selectAdminCat.innerHTML = '';
             
             categories.forEach(cat => {
-                // للواجهة
                 const isActive = cat.name === currentSelectedCategory;
                 const btn = document.createElement('button');
                 btn.onclick = () => window.selectCategory(cat.name);
-                btn.className = `flex flex-col items-center min-w-[72px] gap-2 transition-transform transform hover:scale-105 ${isActive ? 'scale-105' : 'opacity-80'}`;
+                btn.className = `flex flex-col items-center min-w-[72px] gap-2 transition-all duration-200 active:scale-95 transform hover:scale-105 ${isActive ? 'scale-105' : 'opacity-80'}`;
                 btn.innerHTML = `
-                    <div class="w-16 h-16 rounded-2xl overflow-hidden shadow-sm border-2 ${isActive ? 'border-pink-500 ring-2 ring-pink-200' : 'border-transparent'}">
-                        <img src="${cat.image}" alt="${cat.name}" class="w-full h-full object-cover">
+                    <div class="w-16 h-16 rounded-2xl overflow-hidden shadow-sm border-2 transition-all duration-200 ${isActive ? 'border-pink-500 ring-2 ring-pink-200' : 'border-transparent'}">
+                        <img src="${cat.image}" alt="${cat.name}" loading="lazy" class="w-full h-full object-cover">
                     </div>
                     <span class="text-[10px] font-bold ${isActive ? 'text-pink-700' : 'text-stone-600'} text-center truncate w-full px-1">${cat.name}</span>
                 `;
                 container.appendChild(btn);
 
-                // للوحة التحكم (المنتجات) - لا نضيف 'الكل'
                 if(cat.name !== 'الكل') {
                     const opt = document.createElement('option');
                     opt.value = cat.name;
@@ -552,17 +544,17 @@
                 
                 filtered.forEach(p => {
                     const card = document.createElement('div');
-                    card.className = 'bg-white rounded-2xl p-3 border border-pink-100 shadow-sm hover:shadow-md transition flex flex-col h-full';
+                    card.className = 'bg-white rounded-2xl p-3 border border-pink-100 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full animate-in fade-in zoom-in-95';
                     card.innerHTML = `
-                        <div class="relative w-full aspect-square rounded-xl overflow-hidden mb-3 bg-stone-50">
-                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">
+                        <div class="relative w-full aspect-square rounded-xl overflow-hidden mb-3 bg-stone-50 group">
+                            <img src="${p.image}" alt="${p.name}" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                             <div class="absolute top-2 right-2 bg-white/90 backdrop-blur text-pink-600 text-[10px] font-bold px-2 py-1 rounded-md shadow-sm">${p.category}</div>
                         </div>
                         <h3 class="font-bold text-stone-800 text-sm mb-1 leading-tight line-clamp-2">${p.name}</h3>
                         <p class="text-[10px] text-stone-500 line-clamp-2 mb-3 flex-grow">${p.description}</p>
                         <div class="flex items-center justify-between mt-auto pt-2 border-t border-stone-50">
                             <span class="font-black text-pink-700 text-sm">${Number(p.price).toLocaleString()} د.ع</span>
-                            <button onclick="addToCart('${p.id}')" class="w-8 h-8 bg-pink-100 hover:bg-pink-600 hover:text-white text-pink-600 rounded-full flex items-center justify-center transition">
+                            <button onclick="addToCart('${p.id}')" class="w-8 h-8 bg-pink-100 hover:bg-pink-600 hover:text-white text-pink-600 rounded-full flex items-center justify-center transition-all duration-200 active:scale-95">
                                 <i class="fa-solid fa-cart-plus"></i>
                             </button>
                         </div>
@@ -585,7 +577,6 @@
             window.handleSearch('');
         }
 
-        // ----------------- وظائف السلة -----------------
         window.addToCart = (id) => {
             const prod = products.find(p => p.id === id);
             if(!prod) return;
@@ -597,6 +588,10 @@
             }
             window.showCustomAlert('نجاح', `تم إضافة ${prod.name} للسلة!`, false);
             window.updateCartUI();
+            
+            const badge = document.getElementById('cart-badge');
+            badge.classList.add('scale-150');
+            setTimeout(() => badge.classList.remove('scale-150'), 300);
         }
 
         window.updateQuantity = (id, delta) => {
@@ -621,16 +616,16 @@
             } else {
                 cart.forEach(item => {
                     const div = document.createElement('div');
-                    div.className = 'py-3 flex gap-3';
+                    div.className = 'py-3 flex gap-3 animate-in fade-in duration-200';
                     div.innerHTML = `
-                        <img src="${item.image}" class="w-16 h-16 rounded-xl object-cover bg-stone-50">
+                        <img src="${item.image}" loading="lazy" class="w-16 h-16 rounded-xl object-cover bg-stone-50">
                         <div class="flex-grow">
                             <h4 class="font-bold text-sm text-stone-800 line-clamp-1">${item.name}</h4>
                             <div class="text-pink-600 font-bold text-xs mt-1">${Number(item.price).toLocaleString()} د.ع</div>
                             <div class="flex items-center gap-3 mt-2">
-                                <button onclick="updateQuantity('${item.id}', 1)" class="w-6 h-6 bg-stone-100 rounded-md text-stone-600 hover:bg-stone-200">+</button>
+                                <button onclick="updateQuantity('${item.id}', 1)" class="w-6 h-6 bg-stone-100 rounded-md text-stone-600 hover:bg-stone-200 transition-all active:scale-95">+</button>
                                 <span class="text-sm font-bold w-4 text-center">${item.quantity}</span>
-                                <button onclick="updateQuantity('${item.id}', -1)" class="w-6 h-6 bg-stone-100 rounded-md text-stone-600 hover:bg-stone-200">-</button>
+                                <button onclick="updateQuantity('${item.id}', -1)" class="w-6 h-6 bg-stone-100 rounded-md text-stone-600 hover:bg-stone-200 transition-all active:scale-95">-</button>
                             </div>
                         </div>
                     `;
@@ -704,11 +699,10 @@
             text += `\n*💰 الإجمالي الكلي (مع التوصيل):* ${document.getElementById('cart-total-price').innerText}`;
             
             const encodedText = encodeURIComponent(text);
-            const waNumber = "07869367775"; // استبدل الرقم برقم المتجر الحقيقي (بدون أصفار البداية)
+            const waNumber = "9647800000000"; 
             window.open(`https://wa.me/${waNumber}?text=${encodedText}`, '_blank');
         }
 
-        // ----------------- لوحة التحكم -----------------
         function setupHiddenAdminTrigger() {
             const logo = document.getElementById('store-logo-container');
             logo.addEventListener('dblclick', () => { window.openAdminLoginModal(); });
@@ -724,7 +718,7 @@
         window.handleAdminLogin = (e) => {
             e.preventDefault();
             const pass = document.getElementById('admin-password-input').value;
-            if(pass === '12345') { // كلمة المرور الافتراضية
+            if(pass === '12345') { 
                 window.closeAdminLoginModal();
                 document.getElementById('admin-dashboard-modal').classList.remove('hidden');
                 document.getElementById('admin-password-input').value = '';
@@ -740,12 +734,12 @@
             ['products', 'categories', 'discount', 'settings'].forEach(t => {
                 document.getElementById(`admin-tab-${t}`).classList.add('hidden');
                 const btn = document.getElementById(`tab-btn-${t}`);
-                btn.className = "px-5 py-3 font-bold text-sm text-stone-600 hover:text-stone-900 transition";
+                btn.className = "px-5 py-3 font-bold text-sm text-stone-600 hover:text-stone-900 transition-all duration-200";
             });
             
             document.getElementById(`admin-tab-${tab}`).classList.remove('hidden');
             const activeBtn = document.getElementById(`tab-btn-${tab}`);
-            activeBtn.className = "px-5 py-3 font-bold text-sm border-b-2 border-pink-600 text-pink-700 bg-white rounded-t-xl transition";
+            activeBtn.className = "px-5 py-3 font-bold text-sm border-b-2 border-pink-600 text-pink-700 bg-white rounded-t-xl transition-all duration-200";
         }
 
         window.renderAdminTables = () => {
@@ -754,13 +748,13 @@
             products.forEach(p => {
                 pTable.innerHTML += `
                     <tr>
-                        <td class="p-3"><img src="${p.image}" class="w-10 h-10 rounded shadow-sm object-cover"></td>
+                        <td class="p-3"><img src="${p.image}" loading="lazy" class="w-10 h-10 rounded shadow-sm object-cover"></td>
                         <td class="p-3 font-bold">${p.name}</td>
                         <td class="p-3">${p.category}</td>
                         <td class="p-3">${p.price}</td>
                         <td class="p-3 text-center">
-                            <button onclick="editProduct('${p.id}')" class="text-blue-500 hover:text-blue-700 mx-1"><i class="fa-solid fa-pen"></i></button>
-                            <button onclick="deleteProduct('${p.id}')" class="text-red-500 hover:text-red-700 mx-1"><i class="fa-solid fa-trash"></i></button>
+                            <button onclick="editProduct('${p.id}')" class="text-blue-500 hover:text-blue-700 mx-1 transition-all active:scale-95"><i class="fa-solid fa-pen"></i></button>
+                            <button onclick="deleteProduct('${p.id}')" class="text-red-500 hover:text-red-700 mx-1 transition-all active:scale-95"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
                 `;
@@ -771,10 +765,10 @@
             categories.filter(c => c.name !== 'الكل').forEach(c => {
                 cTable.innerHTML += `
                     <tr>
-                        <td class="p-3"><img src="${c.image}" class="w-10 h-10 rounded shadow-sm object-cover"></td>
+                        <td class="p-3"><img src="${c.image}" loading="lazy" class="w-10 h-10 rounded shadow-sm object-cover"></td>
                         <td class="p-3 font-bold">${c.name}</td>
                         <td class="p-3 text-center">
-                            <button onclick="deleteCategory('${c.id}')" class="text-red-500 hover:text-red-700 mx-1"><i class="fa-solid fa-trash"></i></button>
+                            <button onclick="deleteCategory('${c.id}')" class="text-red-500 hover:text-red-700 mx-1 transition-all active:scale-95"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
                 `;
@@ -899,16 +893,15 @@
             window.showCustomAlert('نجاح', 'تم تحديث الشعار.', false);
         }
 
-        // ----------------- التنبيهات -----------------
         window.showCustomAlert = (title, message, isError) => {
             document.getElementById('alert-title').innerText = title;
             document.getElementById('alert-message').innerText = message;
             const icon = document.getElementById('alert-icon');
             if(isError) {
-                icon.className = "w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl";
+                icon.className = "w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl transition-transform hover:scale-110 duration-300";
                 icon.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i>';
             } else {
-                icon.className = "w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl";
+                icon.className = "w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl transition-transform hover:scale-110 duration-300";
                 icon.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
             }
             document.getElementById('custom-alert-modal').classList.remove('hidden');
