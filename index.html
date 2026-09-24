@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>متجر كماليات آثار - عالم العناية والتجميل</title>
-    <!-- تسريع تحميل الخطوط والأيقونات -->
+    <!-- تسريع شبكة توصيل المحتوى والخطوط -->
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://wsrv.nl">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
@@ -373,13 +374,25 @@
             appId: "1:371835325505:web:193000164899157d474ac0"
         };
 
-        // صور سريعة فائقة الخفة SVG لتجنب أي تأخير
+        // صور متجهة SVG سريعة للتجهيز الأولي والافتراضي
         const svgAll = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23fce7f3'/><text x='50%' y='55%' font-family='Arial' font-weight='bold' font-size='22' fill='%23db2777' text-anchor='middle' dominant-baseline='middle'>الكل</text></svg>";
         const svgSkin = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23fce7f3'/><text x='50%' y='55%' font-family='Arial' font-weight='bold' font-size='22' fill='%23db2777' text-anchor='middle' dominant-baseline='middle'>بشرة</text></svg>";
         const svgMakeup = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23fce7f3'/><text x='50%' y='55%' font-family='Arial' font-weight='bold' font-size='22' fill='%23db2777' text-anchor='middle' dominant-baseline='middle'>مكياج</text></svg>";
         const svgPerfume = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23fce7f3'/><text x='50%' y='55%' font-family='Arial' font-weight='bold' font-size='22' fill='%23db2777' text-anchor='middle' dominant-baseline='middle'>عطور</text></svg>";
         const svgProd1 = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'><rect width='300' height='300' fill='%23fce7f3'/><text x='50%' y='50%' font-family='Arial' font-weight='bold' font-size='26' fill='%23db2777' text-anchor='middle' dominant-baseline='middle'>سيروم فيتامين C</text></svg>";
         const svgProd2 = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'><rect width='300' height='300' fill='%23fce7f3'/><text x='50%' y='50%' font-family='Arial' font-weight='bold' font-size='26' fill='%23db2777' text-anchor='middle' dominant-baseline='middle'>أحمر شفاه مات</text></svg>";
+
+        // دالة تحسين الصور الفورية (تحويل الصور إلى صيغة WebP فائقة الخفة وتصغير مقاساتها)
+        function getFastImg(url, width = 350) {
+            if (!url) return svgProd1;
+            if (url.startsWith('data:image')) return url; // لا يتغير إذا كان SVG محلي
+            try {
+                // استخدام خادم تسريع وتحويل التنسيقات لـ WebP بعرض 350px لفتح الصورة فوريًا
+                return `https://wsrv.nl/?url=${encodeURIComponent(url)}&w=${width}&q=80&output=webp`;
+            } catch(e) {
+                return url;
+            }
+        }
 
         let app, db, auth;
         
@@ -427,7 +440,7 @@
             onSnapshot(settingsDocRef, (docSnap) => {
                 if (docSnap.exists()) {
                     const data = docSnap.data();
-                    if (data.logoUrl) document.getElementById('store-logo-img').src = data.logoUrl;
+                    if (data.logoUrl) document.getElementById('store-logo-img').src = getFastImg(data.logoUrl, 150);
                     if (data.discount) {
                         storeDiscount = data.discount;
                         window.updateCartTotals();
@@ -479,8 +492,8 @@
                 btn.onclick = () => window.selectCategory(cat.name);
                 btn.className = `flex flex-col items-center min-w-[72px] gap-2 transition-all duration-200 active:scale-95 transform hover:scale-105 ${isActive ? 'scale-105' : 'opacity-80'}`;
                 btn.innerHTML = `
-                    <div class="w-16 h-16 rounded-2xl overflow-hidden shadow-sm border-2 transition-all duration-200 bg-pink-100 ${isActive ? 'border-pink-500 ring-2 ring-pink-200' : 'border-transparent'}">
-                        <img loading="lazy" decoding="async" src="${cat.image}" alt="${cat.name}" class="w-full h-full object-cover">
+                    <div class="w-16 h-16 rounded-2xl overflow-hidden shadow-sm border-2 transition-all duration-200 bg-pink-100 animate-pulse ${isActive ? 'border-pink-500 ring-2 ring-pink-200' : 'border-transparent'}">
+                        <img loading="lazy" decoding="async" src="${getFastImg(cat.image, 120)}" alt="${cat.name}" class="w-full h-full object-cover" onload="this.parentElement.classList.remove('animate-pulse')" onerror="this.onerror=null;this.src='${svgAll}';this.parentElement.classList.remove('animate-pulse')">
                     </div>
                     <span class="text-[10px] font-bold ${isActive ? 'text-pink-700' : 'text-stone-600'} text-center truncate w-full px-1">${cat.name}</span>
                 `;
@@ -523,8 +536,8 @@
                     const card = document.createElement('div');
                     card.className = 'bg-white rounded-2xl p-3 border border-pink-100 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full';
                     card.innerHTML = `
-                        <div class="relative w-full aspect-square rounded-xl overflow-hidden mb-3 bg-stone-100 group">
-                            <img loading="lazy" decoding="async" src="${p.image}" alt="${p.name}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+                        <div class="relative w-full aspect-square rounded-xl overflow-hidden mb-3 bg-pink-50/70 animate-pulse group">
+                            <img loading="lazy" decoding="async" src="${getFastImg(p.image, 380)}" alt="${p.name}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" onload="this.parentElement.classList.remove('animate-pulse')" onerror="this.onerror=null;this.src='${svgProd1}';this.parentElement.classList.remove('animate-pulse')">
                             <div class="absolute top-2 right-2 bg-white/90 backdrop-blur text-pink-600 text-[10px] font-bold px-2 py-1 rounded-md shadow-sm">${p.category}</div>
                         </div>
                         <h3 class="font-bold text-stone-800 text-sm mb-1 leading-tight line-clamp-2">${p.name}</h3>
@@ -589,7 +602,7 @@
                     const div = document.createElement('div');
                     div.className = 'py-3 flex gap-3';
                     div.innerHTML = `
-                        <img loading="lazy" decoding="async" src="${item.image}" class="w-16 h-16 rounded-xl object-cover bg-stone-50">
+                        <img loading="lazy" decoding="async" src="${getFastImg(item.image, 120)}" class="w-16 h-16 rounded-xl object-cover bg-stone-50" onerror="this.onerror=null;this.src='${svgProd1}'">
                         <div class="flex-grow">
                             <h4 class="font-bold text-sm text-stone-800 line-clamp-1">${item.name}</h4>
                             <div class="text-pink-600 font-bold text-xs mt-1">${Number(item.price).toLocaleString()} د.ع</div>
@@ -606,7 +619,6 @@
             window.updateCartTotals();
         }
 
-        // حساب السلة والخصم بشكل دقيق ومباشر
         window.updateCartTotals = () => {
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             const provinceSelect = document.getElementById('customer-province');
@@ -626,7 +638,6 @@
                 }
             }
 
-            // عدم السماح للخصم بتجاوز مجموع المنتجات
             discountAmount = Math.min(discountAmount, subtotal);
 
             const discountRow = document.getElementById('discount-row');
@@ -708,7 +719,6 @@
             document.getElementById(`admin-tab-${tab}`).classList.remove('hidden');
             document.getElementById(`tab-btn-${tab}`).className = "px-5 py-3 font-bold text-sm border-b-2 border-pink-600 text-pink-700 bg-white rounded-t-xl";
 
-            // تعبئة البيانات عند فتح تبويب الخصم
             if(tab === 'discount') {
                 document.getElementById('admin-discount-type').value = storeDiscount.type || 'none';
                 document.getElementById('admin-discount-value').value = storeDiscount.value || 0;
@@ -722,7 +732,7 @@
             products.forEach(p => {
                 pTable.innerHTML += `
                     <tr>
-                        <td class="p-3"><img loading="lazy" decoding="async" src="${p.image}" class="w-10 h-10 rounded object-cover"></td>
+                        <td class="p-3"><img loading="lazy" decoding="async" src="${getFastImg(p.image, 80)}" class="w-10 h-10 rounded object-cover" onerror="this.onerror=null;this.src='${svgProd1}'"></td>
                         <td class="p-3 font-bold">${p.name}</td>
                         <td class="p-3">${p.category}</td>
                         <td class="p-3">${Number(p.price).toLocaleString()} د.ع</td>
@@ -739,7 +749,7 @@
             categories.filter(c => c.name !== 'الكل').forEach(c => {
                 cTable.innerHTML += `
                     <tr>
-                        <td class="p-3"><img loading="lazy" decoding="async" src="${c.image}" class="w-10 h-10 rounded object-cover"></td>
+                        <td class="p-3"><img loading="lazy" decoding="async" src="${getFastImg(c.image, 80)}" class="w-10 h-10 rounded object-cover" onerror="this.onerror=null;this.src='${svgAll}'"></td>
                         <td class="p-3 font-bold">${c.name}</td>
                         <td class="p-3 text-center">
                             <button onclick="deleteCategory('${c.id}')" class="text-red-500 mx-1"><i class="fa-solid fa-trash"></i></button>
@@ -816,7 +826,6 @@
             renderCategories();
         }
 
-        // حفظ الخصم وتطبيقه مباشرة
         window.saveStoreDiscount = async () => {
             const type = document.getElementById('admin-discount-type').value;
             const value = parseFloat(document.getElementById('admin-discount-value').value) || 0;
@@ -838,7 +847,7 @@
             const url = document.getElementById('store-logo-url-input').value;
             if(!url) return;
             if(!isOfflineMode) await setDoc(doc(db, 'store_settings', 'general'), { logoUrl: url }, { merge: true });
-            document.getElementById('store-logo-img').src = url;
+            document.getElementById('store-logo-img').src = getFastImg(url, 150);
             window.showCustomAlert('نجاح', 'تم تحديث الشعار.', false);
         }
 
