@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>متجر كماليات آثار - عالم العناية والتجميل</title>
     
-    <!-- تسريع شبكة توصيل المحتوى وقواعد البيانات لسرعة الفتح -->
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
@@ -60,30 +59,33 @@
     <!-- المحتوى الرئيسي -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
         
-        <!-- قسم التصنيفات -->
-        <section class="mb-8">
-            <div class="flex items-center justify-between mb-4">
-                <h2 class="text-xl font-black text-stone-900 flex items-center gap-2">
-                    <i class="fa-solid fa-border-all text-pink-600"></i> التصنيفات
+        <!-- قسم التصنيفات الرئيسية -->
+        <section class="mb-4">
+            <div class="flex items-center justify-between mb-3">
+                <h2 class="text-lg font-black text-stone-900 flex items-center gap-2">
+                    <i class="fa-solid fa-border-all text-pink-600"></i> التصنيفات الرئيسية
                 </h2>
             </div>
             
-            <!-- Skeleton التصنيفات -->
             <div id="skeleton-categories" class="flex gap-4 overflow-x-auto pb-3 hide-scrollbar items-start">
                 <script>
                     for(let i=0; i<6; i++) {
-                        document.write(`
-                        <div class="flex flex-col items-center min-w-[72px] gap-2 animate-pulse">
-                            <div class="w-16 h-16 rounded-2xl bg-pink-100/60"></div>
-                            <div class="w-10 h-2 bg-stone-200 rounded-full mt-1"></div>
-                        </div>`);
+                        document.write(`<div class="flex flex-col items-center min-w-[72px] gap-2 animate-pulse"><div class="w-16 h-16 rounded-2xl bg-pink-100/60"></div><div class="w-10 h-2 bg-stone-200 rounded-full mt-1"></div></div>`);
                     }
                 </script>
             </div>
 
-            <!-- الحاوية الحقيقية للتصنيفات -->
-            <div id="categories-container" class="hidden gap-4 overflow-x-auto pb-3 hide-scrollbar items-start">
+            <div id="categories-container" class="hidden gap-4 overflow-x-auto pb-3 hide-scrollbar items-start"></div>
+        </section>
+
+        <!-- قسم التصنيفات الفرعية (يظهر فقط إذا كان التصنيف الرئيسي يحتوي على فروع) -->
+        <section id="subcategories-section" class="mb-8 hidden">
+            <div class="flex items-center gap-2 mb-3">
+                <span class="text-xs font-bold text-pink-600 bg-pink-50 px-3 py-1 rounded-full border border-pink-100 flex items-center gap-1.5">
+                    <i class="fa-solid fa-code-branch"></i> أقسام فرعية لـ: <span id="parent-cat-name-label" class="font-black"></span>
+                </span>
             </div>
+            <div id="subcategories-container" class="flex gap-3 overflow-x-auto pb-2 hide-scrollbar items-start"></div>
         </section>
 
         <!-- قسم المنتجات -->
@@ -98,28 +100,15 @@
                 </div>
             </div>
 
-            <!-- Skeleton المنتجات -->
             <div id="skeleton-products" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 w-full">
                 <script>
                     for(let i=0; i<8; i++) {
-                        document.write(`
-                        <div class="bg-white rounded-2xl p-3 border border-pink-100/50 shadow-sm flex flex-col h-full animate-pulse">
-                            <div class="w-full aspect-square rounded-xl bg-stone-100 mb-3"></div>
-                            <div class="h-3 bg-stone-200 rounded-full w-3/4 mb-2"></div>
-                            <div class="h-2 bg-stone-100 rounded-full w-full mb-1"></div>
-                            <div class="h-2 bg-stone-100 rounded-full w-5/6 mb-3 flex-grow"></div>
-                            <div class="flex items-center justify-between mt-auto pt-2 border-t border-stone-50">
-                                <div class="h-4 bg-stone-200 rounded-full w-16"></div>
-                                <div class="h-7 w-16 bg-pink-100/50 rounded-lg"></div>
-                            </div>
-                        </div>`);
+                        document.write(`<div class="bg-white rounded-2xl p-3 border border-pink-100/50 shadow-sm flex flex-col h-full animate-pulse"><div class="w-full aspect-square rounded-xl bg-stone-100 mb-3"></div><div class="h-3 bg-stone-200 rounded-full w-3/4 mb-2"></div><div class="h-2 bg-stone-100 rounded-full w-full mb-1"></div><div class="h-2 bg-stone-100 rounded-full w-5/6 mb-3 flex-grow"></div><div class="flex items-center justify-between mt-auto pt-2 border-t border-stone-50"><div class="h-4 bg-stone-200 rounded-full w-16"></div><div class="h-7 w-16 bg-pink-100/50 rounded-lg"></div></div></div>`);
                     }
                 </script>
             </div>
 
-            <!-- شبكة المنتجات الحقيقية -->
-            <div id="products-grid" class="hidden grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-            </div>
+            <div id="products-grid" class="hidden grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4"></div>
 
             <div id="no-products-found" class="hidden text-center py-20">
                 <div class="w-16 h-16 bg-pink-100 text-pink-600 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">
@@ -140,8 +129,6 @@
         </div>
     </footer>
 
-    <!-- باقي النوافذ المنبثقة (سلة المشتريات، لوحة التحكم، التنبيهات) تبقى كما هي بدون تغيير هيكلي -->
-    
     <!-- نافذة سلة المشتريات -->
     <div id="cart-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-lg w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden">
@@ -189,9 +176,6 @@
                 <div class="flex justify-between items-center text-xs text-stone-600">
                     <span>قيمة التوصيل:</span><span id="cart-shipping-fee" class="font-bold">3,000 د.ع</span>
                 </div>
-                <div id="discount-row" class="flex justify-between items-center text-xs text-emerald-600 font-bold hidden">
-                    <span id="discount-label-text">الخصم المطبق:</span><span id="cart-discount-val">-0 د.ع</span>
-                </div>
                 <div class="flex justify-between items-center text-base font-black text-stone-900 pt-2 border-t border-stone-200">
                     <span>الإجمالي الكلي:</span><span id="cart-total-price" class="text-pink-700 text-xl">0 د.ع</span>
                 </div>
@@ -202,7 +186,7 @@
         </div>
     </div>
 
-    <!-- لوحة التحكم وتسجيل الدخول -->
+    <!-- نافذة تسجيل دخول لوحة التحكم -->
     <div id="admin-login-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl">
             <h3 class="text-xl font-black text-stone-900 text-center mb-6">لوحة التحكم</h3>
@@ -214,17 +198,51 @@
         </div>
     </div>
 
+    <!-- لوحة التحكم الكاملة وإدارة التصنيفات -->
     <div id="admin-dashboard-modal" class="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-md hidden flex items-center justify-center p-2 sm:p-4">
-        <div class="bg-white rounded-3xl max-w-5xl w-full max-h-[95vh] flex flex-col shadow-2xl overflow-hidden">
+        <div class="bg-white rounded-3xl max-w-4xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden">
             <div class="p-5 border-b border-stone-200 flex items-center justify-between bg-stone-900 text-white">
-                <h3 class="text-lg font-black flex items-center gap-2"><i class="fa-solid fa-sliders text-pink-400"></i> لوحة التحكم</h3>
-                <button onclick="closeAdminDashboard()" class="w-9 h-9 bg-stone-800 text-white rounded-full"><i class="fa-solid fa-xmark"></i></button>
+                <h3 class="text-lg font-black flex items-center gap-2"><i class="fa-solid fa-sliders text-pink-400"></i> لوحة التحكم - إدارة التصنيفات</h3>
+                <button onclick="closeAdminDashboard()" class="w-9 h-9 bg-stone-800 text-white rounded-full flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <!-- تم اختصار عناصر اللوحة هنا للحفاظ على الكود نظيفاً، هي تعمل بنفس الآلية السابقة -->
-            <div class="p-6 text-center text-stone-500 mt-10">محتوى لوحة التحكم كما في النسخة السابقة</div>
+            
+            <div class="p-6 overflow-y-auto flex-grow space-y-6">
+                <!-- نموذج إضافة/تعديل تصنيف -->
+                <div class="bg-pink-50/50 p-4 rounded-2xl border border-pink-100">
+                    <h4 class="font-bold text-sm text-stone-800 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-folder-plus text-pink-600"></i> إضافة تصنيف جديد (رئيسي أو فرعي)
+                    </h4>
+                    <form onsubmit="handleSaveCategory(event)" class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+                        <input type="hidden" id="admin-cat-id">
+                        <div>
+                            <input type="text" id="admin-cat-name" placeholder="اسم التصنيف..." class="w-full px-3.5 py-2.5 bg-white border border-pink-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none" required>
+                        </div>
+                        <div>
+                            <select id="admin-cat-parent" class="w-full px-3.5 py-2.5 bg-white border border-pink-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none">
+                                <option value="">تصنيف رئيسي (بدون أب)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <input type="url" id="admin-cat-image" placeholder="رابط صورة التصنيف (اختياري)..." class="w-full px-3.5 py-2.5 bg-white border border-pink-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <button type="submit" class="w-full bg-pink-600 hover:bg-pink-700 text-white py-2.5 rounded-xl font-bold text-sm shadow transition-all active:scale-95">حفظ التصنيف</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- قائمة التصنيفات الحالية -->
+                <div>
+                    <h4 class="font-bold text-sm text-stone-800 mb-3">التصنيفات المسجلة حالياً</h4>
+                    <div id="admin-categories-list" class="divide-y divide-stone-100 border border-stone-100 rounded-2xl overflow-hidden">
+                        <!-- يتم تعبئتها ديناميكياً -->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- نافذة التنبيهات -->
     <div id="custom-alert-modal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl">
             <div id="alert-icon" class="w-16 h-16 bg-pink-100 text-pink-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl"><i class="fa-solid fa-circle-check"></i></div>
@@ -248,34 +266,27 @@
         const svgAll = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23fce7f3'/><text x='50%' y='55%' font-family='Arial' font-weight='bold' font-size='22' fill='%23db2777' text-anchor='middle' dominant-baseline='middle'>الكل</text></svg>";
         const svgProd1 = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'><rect width='300' height='300' fill='%23fce7f3'/><text x='50%' y='50%' font-family='Arial' font-weight='bold' font-size='26' fill='%23db2777' text-anchor='middle' dominant-baseline='middle'>منتج</text></svg>";
 
-        function getFastImg(url, width = 350) { return url ? url : svgProd1; }
+        function getFastImg(url) { return url ? url : svgProd1; }
 
         let app, db, auth;
         let categories = [
-            { id: 'cat-1', name: 'الكل', image: svgAll },
-            { id: 'cat-2', name: 'العناية بالبشرة', image: svgAll }
+            { id: 'cat-all', name: 'الكل', parentId: null, image: svgAll },
+            { id: 'cat-skincare', name: 'العناية بالبشرة', parentId: null, image: svgAll }
         ];
         let products = [
-            { id: 'prod-1', name: 'سيروم فيتامين سي', category: 'العناية بالبشرة', price: 18000, image: svgProd1, description: 'وصف قصير للمنتج الافتراضي.' }
+            { id: 'prod-1', name: 'سيروم فيتامين سي', category: 'العناية بالبشرة', subcategory: '', price: 18000, image: svgProd1, description: 'وصف قصير للمنتج الافتراضي.' }
         ];
         let cart = [];
         let currentSelectedCategory = 'الكل';
+        let currentSelectedSubcategory = '';
         let searchQuery = '';
-        let storeDiscount = { type: 'none', value: 0, title: 'خصم خاص' };
-        let isOfflineMode = false;
-        let isDataLoaded = false; // متغير للتحكم بإخفاء شاشة التحميل
+        let isDataLoaded = false;
 
-        // الانتظار حتى تحميل الـ DOM وبدء العمل
         window.addEventListener('DOMContentLoaded', () => {
             setupHiddenAdminTrigger();
-            
-            // محاولة الاتصال بقاعدة البيانات
             setTimeout(initFirebase, 10);
-
-            // Fallback: إذا استغرق الاتصال أكثر من 3 ثوانٍ (إنترنت ضعيف)، اعرض البيانات الافتراضية فورا
             setTimeout(() => {
                 if (!isDataLoaded) {
-                    isOfflineMode = true;
                     renderCategories();
                     renderProducts();
                 }
@@ -290,33 +301,21 @@
                 await signInAnonymously(auth);
                 initFirestoreListeners();
             } catch (e) {
-                isOfflineMode = true;
-                if(!isDataLoaded) {
-                    renderCategories();
-                    renderProducts();
-                }
+                renderCategories();
+                renderProducts();
             }
         }
 
         function initFirestoreListeners() {
-            const settingsDocRef = doc(db, 'store_settings', 'general'); 
-            onSnapshot(settingsDocRef, (docSnap) => {
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    if (data.logoUrl) document.getElementById('store-logo-img').src = getFastImg(data.logoUrl, 150);
-                    if (data.discount) storeDiscount = data.discount;
-                }
-            });
-
             onSnapshot(collection(db, 'categories'), (snapshot) => {
-                if(!snapshot.empty) {
-                    const fetchedCats = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                    if (!fetchedCats.find(c => c.name === 'الكل')) {
-                        fetchedCats.unshift({ id: 'cat-all', name: 'الكل', image: svgAll });
-                    }
-                    categories = fetchedCats;
-                    renderCategories();
+                const fetchedCats = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                if (!fetchedCats.find(c => c.name === 'الكل')) {
+                    fetchedCats.unshift({ id: 'cat-all', name: 'الكل', parentId: null, image: svgAll });
                 }
+                categories = fetchedCats;
+                renderCategories();
+                updateAdminCategoryParentDropdown();
+                renderAdminCategoriesList();
             });
 
             onSnapshot(collection(db, 'products'), (snapshot) => {
@@ -324,7 +323,6 @@
                     products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                     renderProducts();
                 } else {
-                    // في حال كانت قاعدة البيانات فارغة تماماً
                     renderProducts();
                 }
             });
@@ -332,6 +330,7 @@
 
         window.goToHome = () => {
             currentSelectedCategory = 'الكل';
+            currentSelectedSubcategory = '';
             window.clearSearch();
             renderCategories();
             renderProducts();
@@ -339,40 +338,91 @@
 
         window.selectCategory = (catName) => {
             currentSelectedCategory = catName;
+            currentSelectedSubcategory = ''; // إعادة تعيين الفرعي عند تغيير الرئيسي
             renderCategories();
+            renderSubcategories(catName);
+            renderProducts();
+        }
+
+        window.selectSubcategory = (subName) => {
+            currentSelectedSubcategory = subName;
+            renderSubcategories(currentSelectedCategory);
             renderProducts();
         }
 
         function renderCategories() {
-            isDataLoaded = true; // نؤكد أن البيانات قد تم جلبها
-
-            // إخفاء الـ Skeleton وإظهار الحاوية الحقيقية
+            isDataLoaded = true;
             document.getElementById('skeleton-categories').classList.add('hidden');
             const container = document.getElementById('categories-container');
             container.classList.remove('hidden');
             container.classList.add('flex');
-            
             container.innerHTML = '';
             
-            categories.forEach(cat => {
+            // تصفية التصنيفات الرئيسية فقط (التي ليس لها parentId أو قيمتها فارغة)
+            const mainCategories = categories.filter(c => !c.parentId);
+
+            mainCategories.forEach(cat => {
                 const isActive = cat.name === currentSelectedCategory;
                 const btn = document.createElement('button');
                 btn.onclick = () => window.selectCategory(cat.name);
                 btn.className = `flex flex-col items-center min-w-[72px] gap-2 transition-all duration-200 active:scale-95 transform hover:scale-105 ${isActive ? 'scale-105' : 'opacity-80'}`;
                 btn.innerHTML = `
                     <div class="w-16 h-16 rounded-2xl overflow-hidden shadow-sm border-2 transition-all duration-200 bg-pink-100 ${isActive ? 'border-pink-500 ring-2 ring-pink-200' : 'border-transparent'}">
-                        <img loading="lazy" src="${getFastImg(cat.image, 120)}" alt="${cat.name}" class="w-full h-full object-cover">
+                        <img loading="lazy" src="${getFastImg(cat.image)}" alt="${cat.name}" class="w-full h-full object-cover">
                     </div>
                     <span class="text-[10px] font-bold ${isActive ? 'text-pink-700' : 'text-stone-600'} text-center truncate w-full px-1">${cat.name}</span>
                 `;
                 container.appendChild(btn);
             });
+
+            renderSubcategories(currentSelectedCategory);
+        }
+
+        function renderSubcategories(mainCatName) {
+            const subSec = document.getElementById('subcategories-section');
+            const subContainer = document.getElementById('subcategories-container');
+            const parentLabel = document.getElementById('parent-cat-name-label');
+
+            // البحث عن التصنيف الرئيسي الحالي لمعرفة الـ ID الخاص به
+            const mainCatObj = categories.find(c => c.name === mainCatName);
+            
+            if (!mainCatObj) {
+                subSec.classList.add('hidden');
+                return;
+            }
+
+            // جلب التصنيفات الفرعية التابعة لهذا الرئيسي
+            const subCategories = categories.filter(c => c.parentId === mainCatObj.id);
+
+            if (subCategories.length === 0 || mainCatName === 'الكل') {
+                subSec.classList.add('hidden');
+                return;
+            }
+
+            parentLabel.innerText = mainCatName;
+            subSec.classList.remove('hidden');
+            subContainer.innerHTML = '';
+
+            // خيار "الكل" للتصنيفات الفرعية
+            const allSubActive = currentSelectedSubcategory === '';
+            const allBtn = document.createElement('button');
+            allBtn.onclick = () => window.selectSubcategory('');
+            allBtn.className = `px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${allSubActive ? 'bg-pink-600 text-white shadow-md' : 'bg-white text-stone-600 border border-pink-200 hover:bg-pink-50'}`;
+            allBtn.innerText = 'الكل';
+            subContainer.appendChild(allBtn);
+
+            subCategories.forEach(sub => {
+                const isActive = sub.name === currentSelectedSubcategory;
+                const btn = document.createElement('button');
+                btn.onclick = () => window.selectSubcategory(sub.name);
+                btn.className = `px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${isActive ? 'bg-pink-600 text-white shadow-md' : 'bg-white text-stone-600 border border-pink-200 hover:bg-pink-50'}`;
+                btn.innerText = sub.name;
+                subContainer.appendChild(btn);
+            });
         }
 
         function renderProducts() {
             isDataLoaded = true;
-
-            // إخفاء الـ Skeleton وإظهار الحاوية الحقيقية
             document.getElementById('skeleton-products').classList.add('hidden');
             const grid = document.getElementById('products-grid');
             const noProducts = document.getElementById('no-products-found');
@@ -383,6 +433,9 @@
             
             if (currentSelectedCategory !== 'الكل') {
                 filtered = filtered.filter(p => p.category === currentSelectedCategory);
+            }
+            if (currentSelectedSubcategory !== '') {
+                filtered = filtered.filter(p => p.subcategory === currentSelectedSubcategory);
             }
             if (searchQuery.trim() !== '') {
                 filtered = filtered.filter(p => p.name.includes(searchQuery) || p.description.includes(searchQuery));
@@ -400,37 +453,18 @@
                 noProducts.classList.add('hidden');
                 
                 filtered.forEach(p => {
-                    let discountBadgeHtml = '';
-                    let priceHtml = `<span class="font-black text-pink-700 text-sm">${Number(p.price).toLocaleString()} د.ع</span>`;
-                    
-                    if (storeDiscount && storeDiscount.type === 'percentage' && storeDiscount.value > 0) {
-                        const discountVal = Number(storeDiscount.value);
-                        const newPrice = Math.round(p.price - (p.price * (discountVal / 100)));
-                        
-                        discountBadgeHtml = `
-                            <div class="absolute top-2 left-2 bg-red-600 text-white text-[11px] font-black px-2.5 py-1.5 rounded-md shadow-lg shadow-red-600/30 z-10 border border-red-500 flex items-center gap-1">
-                                <i class="fa-solid fa-tags text-[9px]"></i> خصم ${discountVal}%
-                            </div>`;
-                        priceHtml = `
-                            <div class="flex flex-col">
-                                <span class="text-[10px] text-stone-400 line-through">${Number(p.price).toLocaleString()} د.ع</span>
-                                <span class="font-black text-red-600 text-sm">${newPrice.toLocaleString()} د.ع</span>
-                            </div>`;
-                    }
-
                     const card = document.createElement('div');
-                    card.className = 'bg-white rounded-2xl p-3 border border-pink-100 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full relative fade-in';
+                    card.className = 'bg-white rounded-2xl p-3 border border-pink-100 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full relative';
                     card.innerHTML = `
-                        <div class="relative w-full aspect-square rounded-xl overflow-hidden mb-3 bg-pink-50/70 group">
-                            ${discountBadgeHtml}
-                            <img loading="lazy" src="${getFastImg(p.image, 380)}" alt="${p.name}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
-                            <div class="absolute top-2 right-2 bg-white/90 backdrop-blur text-pink-600 text-[10px] font-bold px-2 py-1 rounded-md shadow-sm">${p.category}</div>
+                        <div class="relative w-full aspect-square rounded-xl overflow-hidden mb-3 bg-pink-50/70">
+                            <img loading="lazy" src="${getFastImg(p.image)}" alt="${p.name}" class="w-full h-full object-cover">
+                            <div class="absolute top-2 right-2 bg-white/90 backdrop-blur text-pink-600 text-[10px] font-bold px-2 py-1 rounded-md shadow-sm">${p.category} ${p.subcategory ? ' / ' + p.subcategory : ''}</div>
                         </div>
                         <h3 class="font-bold text-stone-800 text-sm mb-1 leading-tight line-clamp-2">${p.name}</h3>
                         <p class="text-[10px] text-stone-500 line-clamp-2 mb-3 flex-grow">${p.description}</p>
                         <div class="flex items-center justify-between mt-auto pt-2 border-t border-stone-50">
-                            ${priceHtml}
-                            <button onclick="addToCart('${p.id}')" class="bg-pink-600 hover:bg-pink-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 active:scale-95 shadow-sm shadow-pink-200 flex items-center gap-1.5">
+                            <span class="font-black text-pink-700 text-sm">${Number(p.price).toLocaleString()} د.ع</span>
+                            <button onclick="addToCart('${p.id}')" class="bg-pink-600 hover:bg-pink-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition-all active:scale-95 shadow-sm flex items-center gap-1.5">
                                 <i class="fa-solid fa-cart-plus text-[10px]"></i> أضف
                             </button>
                         </div>
@@ -440,56 +474,117 @@
             }
         }
 
-        // --- باقي دوال السلة، البحث، الدخول، والتنبيهات (كما في النسخة السابقة) ---
-        window.handleSearch = (val) => {
-            searchQuery = val;
-            const clearBtn = document.getElementById('clear-search-btn');
-            if(val.length > 0) clearBtn.classList.remove('hidden');
-            else clearBtn.classList.add('hidden');
-            renderProducts();
+        // --- ميزات لوحة التحكم للتصنيفات ---
+        function setupHiddenAdminTrigger() {
+            document.getElementById('store-logo-container').addEventListener('dblclick', () => {
+                document.getElementById('admin-login-modal').classList.remove('hidden');
+            });
         }
 
-        window.clearSearch = () => {
-            document.getElementById('main-search-input').value = '';
-            window.handleSearch('');
+        window.handleAdminLogin = (e) => {
+            e.preventDefault();
+            const pass = document.getElementById('admin-password-input').value;
+            if (pass === '12345') {
+                document.getElementById('admin-login-modal').classList.add('hidden');
+                document.getElementById('admin-dashboard-modal').classList.remove('hidden');
+                document.getElementById('admin-password-input').value = '';
+            } else {
+                alert('كلمة المرور غير صحيحة');
+            }
         }
 
+        window.closeAdminDashboard = () => document.getElementById('admin-dashboard-modal').classList.add('hidden');
+        window.closeAdminLoginModal = () => document.getElementById('admin-login-modal').classList.add('hidden');
+
+        function updateAdminCategoryParentDropdown() {
+            const select = document.getElementById('admin-cat-parent');
+            select.innerHTML = '<option value="">تصنيف رئيسي (بدون أب)</option>';
+            // فقط التصنيفات الرئيسية يمكن أن تكون أباً
+            categories.filter(c => !c.parentId && c.id !== 'cat-all').forEach(c => {
+                select.innerHTML += `<option value="${c.id}">${c.name}</option>`;
+            });
+        }
+
+        function renderAdminCategoriesList() {
+            const listContainer = document.getElementById('admin-categories-list');
+            listContainer.innerHTML = '';
+            
+            categories.filter(c => c.id !== 'cat-all').forEach(cat => {
+                const parentObj = categories.find(c => c.id === cat.parentId);
+                const parentNameText = parentObj ? `(تتبع الرئيسي: ${parentObj.name})` : '<span class="text-pink-600 font-bold">تصنيف رئيسي</span>';
+                
+                const item = document.createElement('div');
+                item.className = 'p-3 flex items-center justify-between bg-white hover:bg-stone-50 transition-all';
+                item.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-pink-50 overflow-hidden border border-pink-100">
+                            <img src="${getFastImg(cat.image)}" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-xs text-stone-800">${cat.name}</h5>
+                            <p class="text-[10px] text-stone-500">${parentNameText}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="deleteCategory('${cat.id}')" class="w-8 h-8 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 flex items-center justify-center text-xs transition-all"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+                listContainer.appendChild(item);
+            });
+        }
+
+        window.handleSaveCategory = async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('admin-cat-name').value;
+            const parentId = document.getElementById('admin-cat-parent').value || null;
+            const image = document.getElementById('admin-cat-image').value;
+
+            try {
+                if (db) {
+                    await addDoc(collection(db, 'categories'), { name, parentId, image });
+                } else {
+                    categories.push({ id: 'cat-' + Date.now(), name, parentId, image });
+                }
+                document.getElementById('admin-cat-name').value = '';
+                document.getElementById('admin-cat-image').value = '';
+                document.getElementById('admin-cat-parent').value = '';
+                renderCategories();
+                renderAdminCategoriesList();
+                alert('تم حفظ التصنيف بنجاح!');
+            } catch (err) {
+                alert('حدث خطأ أثناء الحفظ');
+            }
+        }
+
+        window.deleteCategory = async (id) => {
+            if(confirm('هل أنت متأكد من حذف هذا التصنيف؟')) {
+                try {
+                    if(db) {
+                        await deleteDoc(doc(db, 'categories', id));
+                    }
+                    categories = categories.filter(c => c.id !== id);
+                    renderCategories();
+                    renderAdminCategoriesList();
+                } catch(e) {
+                    alert('تعذر الحذف');
+                }
+            }
+        }
+
+        // بقية الدوال الأساسية (السلة والبحث)
+        window.handleSearch = (val) => { searchQuery = val; renderProducts(); }
+        window.clearSearch = () => { document.getElementById('main-search-input').value = ''; window.handleSearch(''); }
         window.addToCart = (id) => {
             const prod = products.find(p => p.id === id);
             if(!prod) return;
             const existing = cart.find(i => i.id === id);
             if(existing) existing.quantity += 1;
             else cart.push({ ...prod, quantity: 1 });
-            window.showCustomAlert('نجاح', `تم إضافة ${prod.name} للسلة!`, false);
-            window.updateCartUI();
-        }
-
-        window.updateCartUI = () => {
             document.getElementById('cart-badge').innerText = cart.reduce((sum, item) => sum + item.quantity, 0);
+            alert(`تم إضافة ${prod.name} للسلة!`);
         }
-
         window.openCartModal = () => document.getElementById('cart-modal').classList.remove('hidden');
         window.closeCartModal = () => document.getElementById('cart-modal').classList.add('hidden');
-
-        function setupHiddenAdminTrigger() {
-            const logo = document.getElementById('store-logo-container');
-            logo.addEventListener('dblclick', () => { window.openAdminLoginModal(); });
-        }
-        
-        window.openAdminLoginModal = () => document.getElementById('admin-login-modal').classList.remove('hidden');
-        window.closeAdminLoginModal = () => document.getElementById('admin-login-modal').classList.add('hidden');
-
-        window.showCustomAlert = (title, message, isError) => {
-            document.getElementById('alert-title').innerText = title;
-            document.getElementById('alert-message').innerText = message;
-            document.getElementById('custom-alert-modal').classList.remove('hidden');
-        }
-        window.closeCustomAlert = () => document.getElementById('custom-alert-modal').classList.add('hidden');
-        
     </script>
-    <style>
-        .fade-in { animation: fadeIn 0.4s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-    </style>
 </body>
 </html>
