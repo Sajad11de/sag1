@@ -19,16 +19,29 @@
   // https://firebase.google.com/docs/web/setup#available-libraries
 
   // Your web app's Firebase configuration
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
   const firebaseConfig = {
-    apiKey: "AIzaSyAVE25IVoicL56umLCqzQWvT7-uMdOxlLE",
-    authDomain: "cosmetic-athar.firebaseapp.com",
-    projectId: "cosmetic-athar",
-    storageBucket: "cosmetic-athar.firebasestorage.app",
-    messagingSenderId: "546675354689",
-    appId: "1:546675354689:web:1b15b2de9066fbfca7aac0",
-    measurementId: "G-9PJLXVJW90"
+    apiKey: "AIzaSyBOeBszexRWhAOC80ixGiWZseRX4ks_ipQ",
+    authDomain: "athar-e00bf.firebaseapp.com",
+    projectId: "athar-e00bf",
+    storageBucket: "athar-e00bf.firebasestorage.app",
+    messagingSenderId: "264890265095",
+    appId: "1:264890265095:web:24e706e7e5fa8570d044a2",
+    measurementId: "G-2FMK3EBME5"
   };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
